@@ -19,19 +19,30 @@ namespace Segmentation.Domain.Implementation
             logger.LogInformation("Segment created {id}, {expression}", segment.Id, segment.Expression);
         }
 
-        public Task Delete(Segment segment)
+        public async Task Delete(Segment segment)
         {
-            throw new NotImplementedException();
+            await repository.Delete(segment);
+            logger.LogInformation("Segment deleted {id}", segment.Id);
         }
 
-        public Task<Segment> Get(Guid id)
+        public async Task<Segment> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var segment = await repository.Get(id);
+            logger.LogInformation("Segment retrieved {id}", id);
+            return segment;
         }
 
-        public Task Update(Segment segment)
+        public async Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            var segment = await repository.GetPage(pageNumber, pageSize);
+            logger.LogInformation("Segment GetPage retrieved {pageNumber} {pageSize}", pageNumber, pageSize);
+            return segment;
+        }
+
+        public async Task Update(Segment segment)
+        {
+            await repository.Update(segment);
+            logger.LogInformation("Segment updated {id}, {expression}", segment.Id, segment.Expression);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Segmentation.Domain.Abstractions
         Task Add(Segment segment);
         Task Update(Segment segment);
         Task Delete(Segment segment);
+        Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize);
         Task<Segment> Get(Guid id);
     }
 }
