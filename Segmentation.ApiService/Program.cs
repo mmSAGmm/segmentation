@@ -1,3 +1,4 @@
+using Segmentation.ApiService.Filters;
 using Segmentation.ApiService.Handlers;
 using Segmentation.DataAccess;
 using Segmentation.Domain;
@@ -30,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapAdminEndpoint();
 
 //string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
