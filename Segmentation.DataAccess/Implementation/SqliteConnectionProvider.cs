@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 using Segmentation.DataAccess.Abstraction;
 using Segmentation.DataAccess.Options;
 using System;
@@ -8,11 +9,11 @@ using System.Text;
 
 namespace Segmentation.DataAccess.Implementation
 {
-    public class SqliteConnectionProvider(SQLiteOption option) : IConnectionProvider
+    public class SqliteConnectionProvider(IOptions<SQLiteOption> option) : IConnectionProvider
     {
         public DbConnection Get() 
         {
-            return new SqliteConnection(option.ConnectionString);
+            return new SqliteConnection(option.Value.ConnectionString);
         }
     }
 }

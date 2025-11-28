@@ -11,18 +11,23 @@ namespace Segmentation.Domain.Implementation
 {
     internal class BackofficeService(
         ISegmentsRepository repository,
-        ILogger logger) : IBackofficeService
+        ILogger<BackofficeService> logger) : IBackofficeService
     {
+        public async Task Init()
+        {
+            await repository.Init();
+        }
+
         public async Task Add(Segment segment)
         {
             await repository.Add(segment);
             logger.LogInformation("Segment created {id}, {expression}", segment.Id, segment.Expression);
         }
 
-        public async Task Delete(Segment segment)
+        public async Task Delete(Guid id)
         {
-            await repository.Delete(segment);
-            logger.LogInformation("Segment deleted {id}", segment.Id);
+            await repository.Delete(id);
+            logger.LogInformation("Segment deleted {id}", id);
         }
 
         public async Task<Segment> Get(Guid id)

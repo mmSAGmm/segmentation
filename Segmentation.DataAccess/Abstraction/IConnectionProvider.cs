@@ -8,7 +8,5 @@ namespace Segmentation.DataAccess.Abstraction
     public interface IConnectionProvider
     {
         DbConnection Get();
-
-        char ParametrPrefix() => '@';
     }
 }

@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using AutoMapper;
+using Dapper;
 using Segmentation.DataAccess.Abstraction;
+using Segmentation.DataAccess.Models;
 using Segmentation.DomainModels;
 using System;
 using System.Collections.Generic;
@@ -8,37 +10,48 @@ using System.Text;
 
 namespace Segmentation.DataAccess.Implementation
 {
-    internal class SegmentsRepository(IConnectionProvider connectionProvider) : ISegmentsRepository
+    internal class SegmentsRepository(
+        IConnectionProvider connectionProvider,
+        IMapper mapper) : ISegmentsRepository
     {
-        private char @p => connectionProvider.ParametrPrefix();
 
         private DbConnection Connection => connectionProvider.Get();
 
         public async Task Add(Segment segment)
         {
-            await Connection.ExecuteAsync($"INSERT INTO Segments(Id, Expression) VALUES({@p}Id, {@p}expression)");
+            await Connection.ExecuteAsync($"INSERT INTO Segments(Id, Expression) VALUES(@Id, @Expression)", segment);
         }
 
-        public async Task Delete(Segment segment)
+        public async Task Delete(Guid id)
         {
-            await Connection.ExecuteAsync($"DELETE FROM Segments WHERE Id = {@p}Id");
+            await Connection.ExecuteAsync($"DELETE FROM Segments WHERE Id = @Id", new { Id = id });
         }
 
         public async Task<Segment> Get(Guid id)
         {
-            var result = await Connection.QueryFirstAsync<Segment>($"SELECT * FROM Segments WHERE Id = {@p}Id");
-            return result;
+            var result = await Connection.QueryFirstAsync<SegmentDbModel>($"SELECT * FROM Segments WHERE Id = @Id", new { Id = id });
+            return mapper.Map<Segment>(result);
         }
 
         public async Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize)
         {
             pageNumber = Math.Max(pageNumber - 1, 0);
-            return await Connection.QueryAsync<Segment>($"SELECT * FROM Segments LIMIT {pageSize} OFFSET {pageNumber * pageSize};");
+            var result = await Connection.QueryAsync<SegmentDbModel>($"SELECT * FROM Segments LIMIT {pageSize} OFFSET {pageNumber * pageSize};");
+            return result.Select(x => mapper.Map<Segment>(x));
+        }
+
+        public async Task Init()
+        {
+            await Connection.ExecuteAsync(@$"
+CREATE TABLE Segments (
+    Id VARCHAR(20) PRIMARY KEY,
+    Expression TEXT NOT NULL
+);");
         }
 
         public async Task Update(Segment segment)
         {
-            await Connection.ExecuteAsync($"Update Segments SET Expression = {@p}expression WHERE Id = {@p}Id");
+            await Connection.ExecuteAsync($"Update Segments SET Expression = @Expression WHERE Id = @Id", segment);
         }
     }
 }

@@ -9,8 +9,9 @@ namespace Segmentation.DataAccess.Abstraction
 {
     public interface ISegmentsRepository
     {
-        public Task Add(Segment segment);
-        Task Delete(Segment segment);
+        Task Init();
+        Task Add(Segment segment);
+        Task Delete(Guid id);
         Task<Segment> Get(Guid id);
         Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize);
         Task Update(Segment segment);
