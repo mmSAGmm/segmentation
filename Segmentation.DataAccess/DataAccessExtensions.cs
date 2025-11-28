@@ -13,6 +13,8 @@ namespace Segmentation.DataAccess
         {
             services.AddSingleton<IConnectionProvider, SqliteConnectionProvider>();
             services.AddSingleton<ISegmentsRepository, SegmentsRepository>();
+            services.AddSingleton<IPropertiesRepository, PropertiesRepository>();
+
             services.AddAutoMapper(x => x.AddProfile<DbMappings>());
             services.Configure<SQLiteOption>(configuration.GetSection("SQLite"));
             return services;

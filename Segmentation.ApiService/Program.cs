@@ -1,4 +1,4 @@
-using Segmentation.ApiService.Filters;
+using Segmentation.ApiService.Middlewares;
 using Segmentation.ApiService.Handlers;
 using Segmentation.DataAccess;
 using Segmentation.Domain;
@@ -32,7 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.MapAdminEndpoint();
+app.MapAdminEndpoints();
+app.MapPropertyEndpoints();
 
 app.MapDefaultEndpoints();
 

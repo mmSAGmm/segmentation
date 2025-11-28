@@ -6,7 +6,7 @@ namespace Segmentation.ApiService.Handlers
 {
     public static class AdminHandlers
     {
-        public static void MapAdminEndpoint(this WebApplication app)
+        public static void MapAdminEndpoints(this WebApplication app)
         {
             app.MapDelete("api/admin/v1/segment/{id:Guid}", DeleteSegment);
             app.MapGet("api/admin/v1/segment/{id:Guid}", GetSegment);

@@ -1,5 +1,5 @@
 ﻿
-namespace Segmentation.ApiService.Filters
+namespace Segmentation.ApiService.Middlewares
 {
     public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
     {

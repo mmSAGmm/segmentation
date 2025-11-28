@@ -13,6 +13,7 @@ namespace Segmentation.Domain
         public static IServiceCollection AddDomain(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IBackofficeService, BackofficeService>();
+            services.AddSingleton<IPropertiesService, PropertiesService>();
             return services;
         }
     }
