@@ -18,10 +18,11 @@ namespace Segmentation.Domain.Implementation
             await repository.Init();
         }
 
-        public async Task Add(Segment segment)
+        public async Task<Guid> Add(Segment segment)
         {
-            await repository.Add(segment);
+            var id = await repository.Add(segment);
             logger.LogInformation("Segment created {id}, {expression}", segment.Id, segment.Expression);
+            return id;
         }
 
         public async Task Delete(Guid id)

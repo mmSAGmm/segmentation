@@ -17,9 +17,10 @@ namespace Segmentation.DataAccess.Implementation
 
         private DbConnection Connection => connectionProvider.Get();
 
-        public async Task Add(Segment segment)
+        public async Task<Guid> Add(Segment segment)
         {
             await Connection.ExecuteAsync($"INSERT INTO Segments(Id, Expression) VALUES(@Id, @Expression)", segment);
+            return segment.Id;
         }
 
         public async Task Delete(Guid id)

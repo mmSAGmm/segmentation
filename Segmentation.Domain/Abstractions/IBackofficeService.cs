@@ -9,7 +9,7 @@ namespace Segmentation.Domain.Abstractions
     public interface IBackofficeService
     {
         Task Init();
-        Task Add(Segment segment);
+        Task<Guid> Add(Segment segment);
         Task Update(Segment segment);
         Task Delete(Guid id);
         Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize);
