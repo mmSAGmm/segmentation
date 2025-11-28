@@ -30,7 +30,7 @@ namespace Segmentation.DataAccess.Implementation
 
         public async Task<Segment> Get(Guid id)
         {
-            var result = await Connection.QueryFirstAsync<SegmentDbModel>($"SELECT * FROM Segments WHERE Id = @Id", new { Id = id });
+            var result = await Connection.QueryFirstOrDefaultAsync<SegmentDbModel>($"SELECT * FROM Segments WHERE Id = @Id", new { Id = id });
             return mapper.Map<Segment>(result);
         }
 
