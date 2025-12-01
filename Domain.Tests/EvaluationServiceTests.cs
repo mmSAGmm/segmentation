@@ -15,12 +15,12 @@ namespace Domain.Tests
 
         public EvaluationService Subject => mocker.Get<EvaluationService>();
 
-        public EvaluationServiceTests() 
+        public EvaluationServiceTests()
         {
             mocker.Use<IExpressionService>(new ExpressionService());
         }
 
-        public void WithExpression(string expression) 
+        public void WithExpression(string expression)
         {
             var mock = mocker.GetMock<ISegmentAdminService>();
             mock.Setup(x => x.Get(It.IsAny<Guid>()))
@@ -44,12 +44,33 @@ namespace Domain.Tests
         }
 
         [Fact]
-        public async Task BracersEvaluation()
+        public async Task NumberEvaluation()
         {
-            Expression<Func<int, int>> expr = x => x * x;
-
             WithProperties(new Dictionary<string, object> { ["name"] = 1 });
             WithExpression(@"x.name == 1");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
+            result.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task StringEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["name"] = "1" });
+            WithExpression(@"x.name == ""1""");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
+            result.ShouldBeTrue();
+        }
+
+        [Fact]
+        public async Task AndEvaluation()
+        {
+            WithProperties(new Dictionary<string, object>
+            {
+                ["name"] = "1",
+                ["name1"] = 2,
+                ["name2"] = "1",
+            });
+            WithExpression(@"x.name == ""1"" && x.name1 == 2");
             var result = await Subject.Evaluate(Guid.Empty, string.Empty);
             result.ShouldBeTrue();
         }
