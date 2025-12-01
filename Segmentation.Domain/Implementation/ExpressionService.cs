@@ -1,41 +1,115 @@
-﻿using NReco.Linq;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Segmentation.Domain.Abstractions;
 using Segmentation.DomainModels;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq.Expressions;
-using System.Text;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
 namespace Segmentation.Domain.Implementation
 {
     public class ExpressionService : IExpressionService
     {
-        NReco.Linq.LambdaParser _lambdaParser = new NReco.Linq.LambdaParser();
 
-        public Func<object, bool> Parse(Segment segment) 
+        private static readonly Lazy<IReadOnlyCollection<MetadataReference>> _defaultReferences = new(() =>
         {
-            var param = Expression.Parameter(typeof(object), "x");
-            var expression = _lambdaParser.Parse(segment.Expression);
-            return Expression.Lambda<Func<object, bool>>(expression, param).Compile();
+            var trustedAssemblies = AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string;
+            if (string.IsNullOrWhiteSpace(trustedAssemblies))
+            {
+                throw new InvalidOperationException("Unable to resolve trusted assemblies for Roslyn compilation.");
+            }
+
+            var frameworkReferences = trustedAssemblies
+                .Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
+                .Where(File.Exists)
+                .Select(path => MetadataReference.CreateFromFile(path))
+                .ToList();
+
+            // Ensure Microsoft.CSharp (runtime binder) is always available even if not part of the trusted list.
+            frameworkReferences.Add(MetadataReference.CreateFromFile(typeof(Binder).Assembly.Location));
+
+            return frameworkReferences;
+        });
+
+        public Func<object, bool> Parse(Segment segment)
+        {
+            string code = @$"
+            using System;
+            public static class DynamicClass
+            {{
+                public static bool Execute(dynamic x)
+                {{ 
+                    return {segment.Expression};
+                }}
+            }}";
+            var syntaxTree = CSharpSyntaxTree.ParseText(code);
+
+            var compilation = CSharpCompilation.Create(
+                "DynamicAssembly",
+                new[] { syntaxTree },
+                _defaultReferences.Value,
+                        new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+            );
+
+            using var ms = new MemoryStream();
+            var result = compilation.Emit(ms);
+
+            if (result.Success)
+            {
+                ms.Seek(0, SeekOrigin.Begin);
+                var assembly = Assembly.Load(ms.ToArray());
+                var type = assembly.GetType("DynamicClass");
+                var method = type.GetMethod("Execute");
+                return (x) => (bool)method.Invoke(null, new object[] { x });
+            }
+            else
+            {
+                foreach (var diag in result.Diagnostics)
+                    Console.WriteLine(diag);
+                throw new InvalidOperationException("Compilation failed");
+
+            }
+
         }
+        //NReco.Linq.LambdaParser _lambdaParser = new NReco.Linq.LambdaParser();
+        //public Func<object, bool> Parse(Segment segment) 
+        //{
+        //    var param = Expression.Parameter(typeof(object), "x");
+        //    var expression = _lambdaParser.Parse(segment.Expression);
+        //    return Expression.Lambda<Func<object, bool>>(expression, param).Compile();
+        //}
+
+
+        //        string code = @"
+        //using System;
+        //public class DynamicClass
+        //{
+        //public void Execute()
+        //{
+        //Console.WriteLine(""Hello from dynamically executed method!"");
+        //}
+        //}";
+
+        //        // Compile the code
+
+
+        //if (results.Errors.Count == 0)
+        //{
+        //// Execute the method
+        //var assembly = results.CompiledAssembly;
+        //        var type = assembly.GetType("DynamicClass");
+        //        var instance = Activator.CreateInstance(type);
+        //        var method = type.GetMethod("Execute");
+        //        method.Invoke(instance, null);
+        //}
+        //else
+        //{
+        //foreach (CompilerError error in results.Errors)
+        //Console.WriteLine($"Error: {error.ErrorText}");
+        //}
+        //}
     }
-
-//    using NReco.Linq;
-//using System.Linq.Expressions;
-
-//var parser = new LambdaParser();
-
-//    // создаём параметр "x"
-//    var param = Expression.Parameter(typeof(int), "x");
-
-//    // парсим строку в Expression
-//    var expr = parser.Parse("x*2+5", new Dictionary<string, object>(), param);
-
-//    // компилируем в Func<int,int>
-//    var lambda = Expression.Lambda<Func<int, int>>(expr, param).Compile();
-
-//    Console.WriteLine(lambda(10)); // 
-
-
 }
