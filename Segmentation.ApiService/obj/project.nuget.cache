@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gEuVql/+QoU=",
+  "dgSpecHash": "eT/qTR3AXMk=",
   "success": true,
   "projectFilePath": "C:\\Segmentation\\Segmentation.ApiService\\Segmentation.ApiService.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,8 @@
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.diagnostics\\10.0.0\\microsoft.extensions.diagnostics.10.0.0.nupkg.sha512",
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.0\\microsoft.extensions.diagnostics.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.diagnostics.exceptionsummarization\\10.0.0\\microsoft.extensions.diagnostics.exceptionsummarization.10.0.0.nupkg.sha512",
+    "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks\\10.0.0\\microsoft.extensions.diagnostics.healthchecks.10.0.0.nupkg.sha512",
+    "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.diagnostics.healthchecks.abstractions\\10.0.0\\microsoft.extensions.diagnostics.healthchecks.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.features\\10.0.0\\microsoft.extensions.features.10.0.0.nupkg.sha512",
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.0\\microsoft.extensions.fileproviders.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\Usere\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\10.0.0\\microsoft.extensions.hosting.abstractions.10.0.0.nupkg.sha512",

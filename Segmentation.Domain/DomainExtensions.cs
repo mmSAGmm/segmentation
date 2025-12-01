@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Segmentation.DataAccess.Abstraction;
 using Segmentation.DataAccess.Implementation;
 using Segmentation.DataAccess.Options;
@@ -19,6 +20,10 @@ namespace Segmentation.Domain
             services.AddSingleton<IEvaluationService, EvaluationService>();
             services.AddSingleton<IExpressionCache, ExpressionCache>();
             services.Configure<ExpressionCacheOptions>(configuration.GetSection("cache:ExpressionCache"));
+
+            services.AddHealthChecks()
+                .AddCheck<ComplierWarnupHealthCheck>("compiler");
+
             return services;
         }
     }
