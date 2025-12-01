@@ -13,7 +13,7 @@ namespace Segmentation.ApiService.Handlers
             app.MapGet("api/admin/v1/segment/init", Init);
             app.MapPost("api/admin/v1/segment", CreateSegment);
             app.MapPut("api/admin/v1/segment", UpdateSegment);
-            app.MapPut("api/admin/v1/segment/page/{number}/{size}", SegmentsPage);
+            app.MapGet("api/admin/v1/segment/page/{number}/{size}", SegmentsPage);
         }
 
         public static Task<Segment> GetSegment(Guid id, ISegmentAdminService service)

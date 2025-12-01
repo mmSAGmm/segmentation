@@ -14,6 +14,8 @@ namespace Segmentation.Domain
         {
             services.AddSingleton<ISegmentAdminService, SegmentAdminService>();
             services.AddSingleton<IPropertiesService, PropertiesService>();
+            services.AddSingleton<IExpressionService, ExpressionService>();
+            services.AddSingleton<IEvaluationService, EvaluationService>();
             return services;
         }
     }

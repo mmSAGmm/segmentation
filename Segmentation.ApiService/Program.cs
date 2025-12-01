@@ -34,6 +34,7 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapAdminEndpoints();
 app.MapPropertyEndpoints();
+app.MapEvaluateEndpoints();
 
 app.MapDefaultEndpoints();
 
