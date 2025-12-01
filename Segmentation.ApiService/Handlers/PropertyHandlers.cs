@@ -9,7 +9,7 @@ namespace Segmentation.ApiService.Handlers
         public static void MapPropertyEndpoints(this WebApplication app)
         {
             app.MapPost("api/business/v1/properties/{id}", Save);
-            app.MapPost("api/business/v1/properties/{id}/{property}", SaveProperty);
+            app.MapPatch("api/business/v1/properties/{id}/{property}", SaveProperty);
             app.MapGet("api/business/v1/properties/{id}", Get);
             app.MapGet("api/business/v1/properties/init", Init);
         }
