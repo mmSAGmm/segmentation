@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Segmentation.Domain.Implementation
 {
-    internal class BackofficeService(
+    internal class SegmentAdminService(
         ISegmentsRepository repository,
-        ILogger<BackofficeService> logger) : IBackofficeService
+        ILogger<SegmentAdminService> logger) : ISegmentAdminService
     {
         public async Task Init()
         {

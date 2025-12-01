@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Segmentation.Domain.Abstractions
 {
-    public interface IBackofficeService
+    public interface ISegmentAdminService
     {
         Task Init();
         Task<Guid> Add(Segment segment);

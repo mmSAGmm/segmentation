@@ -16,28 +16,28 @@ namespace Segmentation.ApiService.Handlers
             app.MapPut("api/admin/v1/segment/page/{number}/{size}", SegmentsPage);
         }
 
-        public static Task<Segment> GetSegment(Guid id, IBackofficeService service)
+        public static Task<Segment> GetSegment(Guid id, ISegmentAdminService service)
         {
             return service.Get(id);
         }
 
-        public static Task Init(IBackofficeService service)
+        public static Task Init(ISegmentAdminService service)
         {
             return service.Init();
         }
 
-        public static async Task CreateSegment(Segment segment, IBackofficeService service)
+        public static async Task CreateSegment(Segment segment, ISegmentAdminService service)
         {
             segment.Id = Guid.NewGuid();
             await service.Add(segment);
         }
 
-        public static async Task UpdateSegment(Segment segment, IBackofficeService service)
+        public static async Task UpdateSegment(Segment segment, ISegmentAdminService service)
         {
             await service.Update(segment);
         }
 
-        public static async Task DeleteSegment(Guid id, IBackofficeService service)
+        public static async Task DeleteSegment(Guid id, ISegmentAdminService service)
         {
             await service.Delete(id);
         }
@@ -45,7 +45,7 @@ namespace Segmentation.ApiService.Handlers
         public static async Task<IEnumerable<Segment>> SegmentsPage(
             int pageNumber, 
             int pageSize, 
-            IBackofficeService service)
+            ISegmentAdminService service)
         {
             return await service.GetPage(pageNumber, pageSize);
         }
