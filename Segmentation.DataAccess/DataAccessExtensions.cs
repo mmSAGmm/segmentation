@@ -17,6 +17,7 @@ namespace Segmentation.DataAccess
 
             services.AddAutoMapper(x => x.AddProfile<DbMappings>());
             services.Configure<SQLiteOption>(configuration.GetSection("SQLite"));
+            services.Configure<QueryOption>(configuration.GetSection("Query"));
             return services;
         }
     }

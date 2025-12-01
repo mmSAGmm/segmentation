@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Options;
 using Segmentation.DataAccess.Abstraction;
 using Segmentation.DataAccess.Models;
+using Segmentation.DataAccess.Options;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -10,13 +12,16 @@ using System.Text.Json.Serialization;
 
 namespace Segmentation.DataAccess.Implementation
 {
-    public class PropertiesRepository(IConnectionProvider provider) : IPropertiesRepository
+    public class PropertiesRepository(IConnectionProvider provider, IOptions<QueryOption> option) : IPropertiesRepository
     {
         private DbConnection Connection => provider.Get();
 
         public async Task<Dictionary<string, object>> Get(string id, CancellationToken token)
         {
-            var result = await Connection.QueryFirstOrDefaultAsync<PropertiesDbModel>("SELECT * FROM Properties WHERE Id = @Id", new { Id = id });
+            var result = await Connection.QueryFirstOrDefaultAsync<PropertiesDbModel>(
+                "SELECT * FROM Properties WHERE Id = @Id", 
+                new { Id = id },
+                commandTimeout: option.Value.TimeoutSeconds);
             var json = result?.Json ?? "{}";
             return JsonSerializer.Deserialize<Dictionary<string, object>>(json);
         }
@@ -24,16 +29,18 @@ namespace Segmentation.DataAccess.Implementation
         public async Task Set(Dictionary<string, object> value, string id, CancellationToken token)
         {
             using var connection = Connection;
-            await connection.OpenAsync();
+         //   await connection.OpenAsync();
          //   using var transaction = await Connection.BeginTransactionAsync();
 
-            await Connection.ExecuteAsync("DELETE FROM Properties WHERE Id = @Id", new { Id = id });
+            await Connection.ExecuteAsync("DELETE FROM Properties WHERE Id = @Id", new { Id = id },
+                commandTimeout: option.Value.TimeoutSeconds);
             await Connection.ExecuteAsync("INSERT INTO Properties VALUES (@Id, @Json)",
                 new
                 {
                     Id = id,
                     Json = JsonSerializer.Serialize(value)
-                });
+                },
+                commandTimeout: option.Value.TimeoutSeconds);
            // await transaction.CommitAsync();
         }
 
