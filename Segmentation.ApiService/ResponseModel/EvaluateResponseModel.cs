@@ -2,6 +2,6 @@
 {
     public class EvaluateResponseModel
     {
-        public bool Result { get; set; }
+        public bool? Result { get; set; }
     }
 }

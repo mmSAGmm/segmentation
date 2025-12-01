@@ -6,6 +6,6 @@ namespace Segmentation.Domain.Abstractions
 {
     public interface IEvaluationService
     {
-        Task<bool> Evaluate(Guid segmentId, string propertiesId);
+        Task<bool?> Evaluate(Guid segmentId, string propertiesId);
     }
 }
