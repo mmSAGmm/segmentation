@@ -10,7 +10,7 @@ namespace Segmentation.Domain
     {
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
-            compilationService.Parse(new DomainModels.Segment() { Expression = "1==1" });
+            compilationService.Parse(new DomainModels.Segment() { Expression = " x.name == 1" });
             return HealthCheckResult.Healthy();
         }
     }
