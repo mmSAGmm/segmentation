@@ -34,7 +34,7 @@ namespace Segmentation.Domain.Implementation
             return frameworkReferences;
         });
 
-        public Func<object, bool?> Parse(Segment segment)
+        public Func<object, bool?> Compile(Segment segment)
         {
             if (segment == null) return (x)=> null;
 

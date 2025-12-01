@@ -8,6 +8,6 @@ namespace Segmentation.Domain.Abstractions
 {
     public interface IExpressionCompilationService
     {
-        Func<object, bool?> Parse(Segment segment);
+        Func<object, bool?> Compile(Segment segment);
     }
 }

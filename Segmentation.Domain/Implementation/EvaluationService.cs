@@ -25,7 +25,7 @@ namespace Segmentation.Domain.Implementation
             var lamda = expressionCache.Get(segment.Expression);
             if (lamda == null) 
             { 
-                lamda = expressionService.Parse(segment);
+                lamda = expressionService.Compile(segment);
                 expressionCache.Set(segment.Expression, lamda);
             }
             bool? result = null;
