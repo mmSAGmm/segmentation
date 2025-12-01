@@ -2,6 +2,7 @@ using Segmentation.ApiService.Middlewares;
 using Segmentation.ApiService.Handlers;
 using Segmentation.DataAccess;
 using Segmentation.Domain;
+using Microsoft.Extensions.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDomain(builder.Configuration);
 builder.Services.AddDataAccess(builder.Configuration);
+builder.Services.AddSingleton<ISystemClock, SystemClock>();
+builder.Services.AddMemoryCache();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -6,8 +6,8 @@ using System.Text;
 
 namespace Segmentation.Domain.Abstractions
 {
-    public interface IExpressionService
+    public interface IExpressionCompilationService
     {
-        Func<object, bool> Parse(Segment segment);
+        Func<object, bool?> Parse(Segment segment);
     }
 }

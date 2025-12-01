@@ -11,7 +11,7 @@ using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
 namespace Segmentation.Domain.Implementation
 {
-    public class ExpressionService : IExpressionService
+    public class ExpressionCompilationService : IExpressionCompilationService
     {
 
         private static readonly Lazy<IReadOnlyCollection<MetadataReference>> _defaultReferences = new(() =>
@@ -34,8 +34,10 @@ namespace Segmentation.Domain.Implementation
             return frameworkReferences;
         });
 
-        public Func<object, bool> Parse(Segment segment)
+        public Func<object, bool?> Parse(Segment segment)
         {
+            if (segment == null) return (x)=> null;
+
             string code = @$"
             using System;
             public static class DynamicClass
@@ -74,42 +76,5 @@ namespace Segmentation.Domain.Implementation
             }
 
         }
-        //NReco.Linq.LambdaParser _lambdaParser = new NReco.Linq.LambdaParser();
-        //public Func<object, bool> Parse(Segment segment) 
-        //{
-        //    var param = Expression.Parameter(typeof(object), "x");
-        //    var expression = _lambdaParser.Parse(segment.Expression);
-        //    return Expression.Lambda<Func<object, bool>>(expression, param).Compile();
-        //}
-
-
-        //        string code = @"
-        //using System;
-        //public class DynamicClass
-        //{
-        //public void Execute()
-        //{
-        //Console.WriteLine(""Hello from dynamically executed method!"");
-        //}
-        //}";
-
-        //        // Compile the code
-
-
-        //if (results.Errors.Count == 0)
-        //{
-        //// Execute the method
-        //var assembly = results.CompiledAssembly;
-        //        var type = assembly.GetType("DynamicClass");
-        //        var instance = Activator.CreateInstance(type);
-        //        var method = type.GetMethod("Execute");
-        //        method.Invoke(instance, null);
-        //}
-        //else
-        //{
-        //foreach (CompilerError error in results.Errors)
-        //Console.WriteLine($"Error: {error.ErrorText}");
-        //}
-        //}
     }
 }

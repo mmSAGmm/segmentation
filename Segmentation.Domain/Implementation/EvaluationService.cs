@@ -3,6 +3,7 @@ using Segmentation.Domain.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Segmentation.Domain.Implementation
@@ -10,15 +11,23 @@ namespace Segmentation.Domain.Implementation
     public class EvaluationService(
         ISegmentAdminService segmentAdminService, 
         IPropertiesService propertiesService,
-        IExpressionService expressionService,
+        IExpressionCompilationService expressionService,
+        IExpressionCache expressionCache,
         ILogger<EvaluationService> logger) : IEvaluationService
     {
         public async Task<bool?> Evaluate(Guid segmentId, string propertiesId)
         {
             var segment = await segmentAdminService.Get(segmentId);
+            if (segment == null) return null;
+
             var properties = await propertiesService.Get(propertiesId);
             var dynamicProperties = ToExpando(properties);
-            var lamda = expressionService.Parse(segment);
+            var lamda = expressionCache.Get(segment.Expression);
+            if (lamda == null) 
+            { 
+                lamda = expressionService.Parse(segment);
+                expressionCache.Set(segment.Expression, lamda);
+            }
             bool? result = null;
             try
             {
@@ -41,7 +50,16 @@ namespace Segmentation.Domain.Implementation
             IDictionary<string, object> target = new ExpandoObject();
             foreach (var kvp in source)
             {
-                target[kvp.Key] = kvp.Value;
+                var value = kvp.Value;
+                if (value is System.Text.Json.JsonElement el) {
+                    value = el.ValueKind switch {
+                        JsonValueKind.String => el.GetString(),
+                        JsonValueKind.Number => el.GetDecimal(),
+                        JsonValueKind.True => el.GetBoolean()
+                    };
+                }
+
+                target[kvp.Key] = value;
             }
 
             return (ExpandoObject)target;

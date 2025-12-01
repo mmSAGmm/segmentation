@@ -17,7 +17,7 @@ namespace Domain.Tests
 
         public EvaluationServiceTests()
         {
-            mocker.Use<IExpressionService>(new ExpressionService());
+            mocker.Use<IExpressionCompilationService>(new ExpressionCompilationService());
         }
 
         public void WithExpression(string expression)
