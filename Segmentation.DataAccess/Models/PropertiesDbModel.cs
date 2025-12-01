@@ -8,6 +8,6 @@ namespace Segmentation.DataAccess.Models
     {
         public string Id { get; set; }
 
-        public string Properties { get; set; }
+        public string Json { get; set; }
     }
 }

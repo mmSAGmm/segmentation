@@ -17,7 +17,7 @@ namespace Segmentation.DataAccess.Implementation
         public async Task<Dictionary<string, object>> Get(string id)
         {
             var result = await Connection.QueryFirstOrDefaultAsync<PropertiesDbModel>("SELECT * FROM Properties WHERE Id = @Id", new { Id = id });
-            var json = result?.Properties ?? "{}";
+            var json = result?.Json ?? "{}";
             return JsonSerializer.Deserialize<Dictionary<string, object>>(json);
         }
 
@@ -26,18 +26,13 @@ namespace Segmentation.DataAccess.Implementation
             using var connection = Connection;
             await connection.OpenAsync();
          //   using var transaction = await Connection.BeginTransactionAsync();
-            var model = new PropertiesDbModel
-            {
-                Id = id.ToString(),
-                Properties = value
-            };
 
             await Connection.ExecuteAsync("DELETE FROM Properties WHERE Id = @Id", new { Id = id });
             await Connection.ExecuteAsync("INSERT INTO Properties VALUES (@Id, @Json)",
                 new
                 {
                     Id = id,
-                    Json = JsonSerializer.Serialize(model)
+                    Json = JsonSerializer.Serialize(value)
                 });
            // await transaction.CommitAsync();
         }
