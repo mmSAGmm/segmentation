@@ -18,36 +18,36 @@ namespace Segmentation.Domain.Implementation
             await repository.Init();
         }
 
-        public async Task<Guid> Add(Segment segment)
+        public async Task<Guid> Add(Segment segment, CancellationToken token)
         {
-            var id = await repository.Add(segment);
+            var id = await repository.Add(segment, token);
             logger.LogInformation("Segment created {id}, {expression}", segment.Id, segment.Expression);
             return id;
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(Guid id, CancellationToken token)
         {
-            await repository.Delete(id);
+            await repository.Delete(id, token);
             logger.LogInformation("Segment deleted {id}", id);
         }
 
-        public async Task<Segment> Get(Guid id)
+        public async Task<Segment> Get(Guid id, CancellationToken token)
         {
-            var segment = await repository.Get(id);
+            var segment = await repository.Get(id, token);
             logger.LogInformation("Segment retrieved {id}", id);
             return segment;
         }
 
-        public async Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize, CancellationToken token)
         {
-            var segment = await repository.GetPage(pageNumber, pageSize);
+            var segment = await repository.GetPage(pageNumber, pageSize, token);
             logger.LogInformation("Segment GetPage retrieved {pageNumber} {pageSize}", pageNumber, pageSize);
             return segment;
         }
 
-        public async Task Update(Segment segment)
+        public async Task Update(Segment segment, CancellationToken token)
         {
-            await repository.Update(segment);
+            await repository.Update(segment, token);
             logger.LogInformation("Segment updated {id}, {expression}", segment.Id, segment.Expression);
         }
     }

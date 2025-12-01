@@ -6,9 +6,9 @@ namespace Segmentation.Domain.Abstractions
 {
     public interface IPropertiesService
     {
-        Task Set<T>(T value, string name, string id);
-        Task Set(Dictionary<string, object> values, string id);
-        Task<Dictionary<string, object>> Get(string id);
+        Task Set<T>(T value, string name, string id, CancellationToken token);
+        Task Set(Dictionary<string, object> values, string id, CancellationToken token);
+        Task<Dictionary<string, object>> Get(string id, CancellationToken token);
         Task Init();
     }
 }

@@ -14,9 +14,9 @@ namespace Segmentation.ApiService.Handlers
             app.MapGet("api/business/v1/properties/init", Init);
         }
 
-        public static Task<Dictionary<string, object>> Get(string id, IPropertiesService service)
+        public static Task<Dictionary<string, object>> Get(string id, IPropertiesService service, CancellationToken token)
         {
-            return service.Get(id);
+            return service.Get(id, token);
         }
 
         public static Task Init(IPropertiesService service)
@@ -24,14 +24,14 @@ namespace Segmentation.ApiService.Handlers
             return service.Init();
         }
 
-        public static async Task Save(string id, Dictionary<string, object> properties, IPropertiesService service)
+        public static async Task Save(string id, Dictionary<string, object> properties, IPropertiesService service, CancellationToken token)
         {
-            await service.Set(properties, id);
+            await service.Set(properties, id, token);
         }
 
-        public static async Task SaveProperty(string id, string property, SetPropertyRequestModel requestModel, IPropertiesService service)
+        public static async Task SaveProperty(string id, string property, SetPropertyRequestModel requestModel, IPropertiesService service, CancellationToken token)
         {
-            await service.Set(requestModel.Value, property, id);
+            await service.Set(requestModel.Value, property, id, token);
         }
     }
 }

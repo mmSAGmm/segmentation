@@ -15,12 +15,12 @@ namespace Segmentation.Domain.Implementation
         IExpressionCache expressionCache,
         ILogger<EvaluationService> logger) : IEvaluationService
     {
-        public async Task<bool?> Evaluate(Guid segmentId, string propertiesId)
+        public async Task<bool?> Evaluate(Guid segmentId, string propertiesId, CancellationToken token)
         {
-            var segment = await segmentAdminService.Get(segmentId);
+            var segment = await segmentAdminService.Get(segmentId, token);
             if (segment == null) return null;
 
-            var properties = await propertiesService.Get(propertiesId);
+            var properties = await propertiesService.Get(propertiesId, token);
             var dynamicProperties = ToExpando(properties);
             var lamda = expressionCache.Get(segment.Expression);
             if (lamda == null) 

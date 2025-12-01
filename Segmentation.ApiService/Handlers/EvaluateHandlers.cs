@@ -11,9 +11,9 @@ namespace Segmentation.ApiService.Handlers
             app.MapPost("api/business/v1/evaluate/{segmentId:Guid}/{propertiesId}", Evaluate);
         }
 
-        public static async Task<EvaluateResponseModel> Evaluate(Guid segmentId, string propertiesId, IEvaluationService service)
+        public static async Task<EvaluateResponseModel> Evaluate(Guid segmentId, string propertiesId, IEvaluationService service, CancellationToken token)
         {
-            var result = await service.Evaluate(segmentId, propertiesId);
+            var result = await service.Evaluate(segmentId, propertiesId, token);
             return new EvaluateResponseModel
             {
                 Result = result

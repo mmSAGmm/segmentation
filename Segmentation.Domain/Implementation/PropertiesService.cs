@@ -8,16 +8,16 @@ namespace Segmentation.Domain.Implementation
 {
     public class PropertiesService(IPropertiesRepository repository) : IPropertiesService
     {
-        public async Task Set<T>(T value, string name, string id)
+        public async Task Set<T>(T value, string name, string id, CancellationToken token)
         {
-            var properties = await repository.Get(id);
+            var properties = await repository.Get(id, token);
             properties[name] = value;
-            await repository.Set(properties, id);
+            await repository.Set(properties, id, token);
         }
 
-        public async Task<Dictionary<string, object>> Get(string id) 
+        public async Task<Dictionary<string, object>> Get(string id, CancellationToken token) 
         {
-            return await repository.Get(id);
+            return await repository.Get(id, token);
         }
 
         public async Task Init()
@@ -25,14 +25,14 @@ namespace Segmentation.Domain.Implementation
             await repository.Init();
         }
 
-        public async Task Set(Dictionary<string, object> values, string id)
+        public async Task Set(Dictionary<string, object> values, string id, CancellationToken token)
         {
-            var properties = await repository.Get(id);
+            var properties = await repository.Get(id, token);
             foreach (var property in values)
             {
                 properties[property.Key] = property.Value;
             }
-            await repository.Set(properties, id);
+            await repository.Set(properties, id, token);
         }
     }
 }

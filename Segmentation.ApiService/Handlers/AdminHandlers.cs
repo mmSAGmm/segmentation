@@ -16,9 +16,9 @@ namespace Segmentation.ApiService.Handlers
             app.MapGet("api/admin/v1/segment/page/{number}/{size}", SegmentsPage);
         }
 
-        public static Task<Segment> GetSegment(Guid id, ISegmentAdminService service)
+        public static Task<Segment> GetSegment(Guid id, ISegmentAdminService service, CancellationToken token)
         {
-            return service.Get(id);
+            return service.Get(id, token);
         }
 
         public static Task Init(ISegmentAdminService service)
@@ -26,28 +26,28 @@ namespace Segmentation.ApiService.Handlers
             return service.Init();
         }
 
-        public static async Task CreateSegment(Segment segment, ISegmentAdminService service)
+        public static async Task CreateSegment(Segment segment, ISegmentAdminService service, CancellationToken token)
         {
             segment.Id = Guid.NewGuid();
-            await service.Add(segment);
+            await service.Add(segment, token);
         }
 
-        public static async Task UpdateSegment(Segment segment, ISegmentAdminService service)
+        public static async Task UpdateSegment(Segment segment, ISegmentAdminService service, CancellationToken token)
         {
-            await service.Update(segment);
+            await service.Update(segment, token);
         }
 
-        public static async Task DeleteSegment(Guid id, ISegmentAdminService service)
+        public static async Task DeleteSegment(Guid id, ISegmentAdminService service, CancellationToken token)
         {
-            await service.Delete(id);
+            await service.Delete(id, token);
         }
 
         public static async Task<IEnumerable<Segment>> SegmentsPage(
             int pageNumber, 
             int pageSize, 
-            ISegmentAdminService service)
+            ISegmentAdminService service, CancellationToken token)
         {
-            return await service.GetPage(pageNumber, pageSize);
+            return await service.GetPage(pageNumber, pageSize, token);
         }
     }
 }

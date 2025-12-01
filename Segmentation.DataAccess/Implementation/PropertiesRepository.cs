@@ -14,14 +14,14 @@ namespace Segmentation.DataAccess.Implementation
     {
         private DbConnection Connection => provider.Get();
 
-        public async Task<Dictionary<string, object>> Get(string id)
+        public async Task<Dictionary<string, object>> Get(string id, CancellationToken token)
         {
             var result = await Connection.QueryFirstOrDefaultAsync<PropertiesDbModel>("SELECT * FROM Properties WHERE Id = @Id", new { Id = id });
             var json = result?.Json ?? "{}";
             return JsonSerializer.Deserialize<Dictionary<string, object>>(json);
         }
 
-        public async Task Set(Dictionary<string, object> value, string id)
+        public async Task Set(Dictionary<string, object> value, string id, CancellationToken token)
         {
             using var connection = Connection;
             await connection.OpenAsync();

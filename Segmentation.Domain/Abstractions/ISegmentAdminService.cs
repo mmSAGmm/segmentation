@@ -9,10 +9,10 @@ namespace Segmentation.Domain.Abstractions
     public interface ISegmentAdminService
     {
         Task Init();
-        Task<Guid> Add(Segment segment);
-        Task Update(Segment segment);
-        Task Delete(Guid id);
-        Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize);
-        Task<Segment> Get(Guid id);
+        Task<Guid> Add(Segment segment, CancellationToken token);
+        Task Update(Segment segment, CancellationToken token);
+        Task Delete(Guid id, CancellationToken token);
+        Task<IEnumerable<Segment>> GetPage(int pageNumber, int pageSize, CancellationToken token);
+        Task<Segment> Get(Guid id, CancellationToken token);
     }
 }

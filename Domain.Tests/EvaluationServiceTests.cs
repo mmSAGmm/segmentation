@@ -23,14 +23,14 @@ namespace Domain.Tests
         public void WithExpression(string expression)
         {
             var mock = mocker.GetMock<ISegmentAdminService>();
-            mock.Setup(x => x.Get(It.IsAny<Guid>()))
+            mock.Setup(x => x.Get(It.IsAny<Guid>(), CancellationToken.None))
                 .ReturnsAsync(new Segment() { Expression = expression });
         }
 
         private void WithProperties(Dictionary<string, object> properties)
         {
             var mock = mocker.GetMock<IPropertiesService>();
-            mock.Setup(x => x.Get(It.IsAny<string>()))
+            mock.Setup(x => x.Get(It.IsAny<string>(), CancellationToken.None))
                 .ReturnsAsync(properties);
         }
 
@@ -39,8 +39,8 @@ namespace Domain.Tests
         {
             WithProperties(new Dictionary<string, object> { });
             WithExpression("1==1");
-            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
-            result.ShouldBeTrue();
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
         }
 
         [Fact]
@@ -48,8 +48,8 @@ namespace Domain.Tests
         {
             WithProperties(new Dictionary<string, object> { ["name"] = 1 });
             WithExpression(@"x.name == 1");
-            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
-            result.ShouldBeTrue();
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
         }
 
         [Fact]
@@ -57,8 +57,8 @@ namespace Domain.Tests
         {
             WithProperties(new Dictionary<string, object> { ["name"] = "1" });
             WithExpression(@"x.name == ""1""");
-            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
-            result.ShouldBeTrue();
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
         }
 
         [Fact]
@@ -71,8 +71,8 @@ namespace Domain.Tests
                 ["name2"] = "1",
             });
             WithExpression(@"x.name == ""1"" && x.name1 == 2");
-            var result = await Subject.Evaluate(Guid.Empty, string.Empty);
-            result.ShouldBeTrue();
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
         }
     }
 }
