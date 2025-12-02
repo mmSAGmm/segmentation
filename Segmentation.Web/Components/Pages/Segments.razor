@@ -15,26 +15,30 @@
 }
 else
 {
-    <FluentGrid Columns="3" Gap="10">
-        <FluentListbox TOption="string" ValueChanged="@(OnValueChange)">
+    <FluentStack>
+        <FluentListbox Width="300px" Height="900px" TOption="string" ValueChanged="@(OnValueChange)">
             @foreach (var segment in segments)
             {
                 <FluentOption Value="@segment.Id.ToString()">@(segment.Name)</FluentOption>
             }
         </FluentListbox>
 
-        <p>Id</p>
-        <FluentTextField Disabled="true" @bind-Value=id AriaLabel="No label"></FluentTextField>
+        <FluentStack Orientation="Orientation.Vertical">
 
-        <p>Name</p>
-        <FluentTextField @bind-Value=name AriaLabel="No label"></FluentTextField>
+            <p>Id</p>
+            <FluentTextField Width="300px" Disabled="true" @bind-Value=id AriaLabel="No label"></FluentTextField>
 
-        <p>Expression</p>
-        <FluentTextArea @bind-Value=expression Rows="12"></FluentTextArea>
+            <p>Name</p>
+            <FluentTextField Width="300px" @bind-Value=name AriaLabel="No label"></FluentTextField>
 
-        <FluentButton Appearance="Appearance.Accent" OnClick="@OnSaveClick" >Save</FluentButton>
-        <FluentButton Appearance="Appearance.Accent" OnClick="@OnNewClick" >New</FluentButton>
-    </FluentGrid>
+            <p>Expression</p>
+            <FluentTextArea Width="300px" @bind-Value=expression Rows="12"></FluentTextArea>
+            <FluentStack>
+                <FluentButton Appearance="Appearance.Accent" OnClick="@OnSaveClick" >Save</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" OnClick="@OnNewClick" >New</FluentButton>
+            </FluentStack>
+        </FluentStack>
+    </FluentStack>
 }
 
 @code {
