@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Segmentation.Domain.Abstractions;
+using Segmentation.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -21,7 +22,7 @@ namespace Segmentation.Domain.Implementation
             if (segment == null) return null;
 
             var properties = await propertiesService.Get(propertiesId, token);
-            var dynamicProperties = ToExpando(properties);
+            var dynamicProperties = SafeDynamic(properties);
             var lamda = expressionCache.Get(segment.Expression);
             if (lamda == null) 
             { 
@@ -40,14 +41,9 @@ namespace Segmentation.Domain.Implementation
             return result;
         }
 
-        private static dynamic ToExpando(Dictionary<string, object> source)
+        private static dynamic SafeDynamic(Dictionary<string, object> source)
         {
-            if (source == null)
-            {
-                return new ExpandoObject();
-            }
-
-            IDictionary<string, object> target = new ExpandoObject();
+            Dictionary<string, object> container = new Dictionary<string, object>();
             foreach (var kvp in source)
             {
                 var value = kvp.Value;
@@ -60,10 +56,9 @@ namespace Segmentation.Domain.Implementation
                     };
                 }
 
-                target[kvp.Key] = value;
+                container[kvp.Key] = value;
             }
-
-            return (ExpandoObject)target;
+            return new SafeDynamic(container);
         }
     }
 }
