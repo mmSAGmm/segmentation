@@ -55,7 +55,8 @@ namespace Segmentation.Domain.Implementation
                     value = el.ValueKind switch {
                         JsonValueKind.String => el.GetString(),
                         JsonValueKind.Number => el.GetDecimal(),
-                        JsonValueKind.True => el.GetBoolean()
+                        JsonValueKind.True => el.GetBoolean(),
+                        JsonValueKind.False => el.GetBoolean()
                     };
                 }
 
