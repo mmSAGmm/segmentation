@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Segmentation.Domain.Models
@@ -17,7 +18,9 @@ namespace Segmentation.Domain.Models
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             if (_members.TryGetValue(binder.Name, out result))
+            { 
                 return true;
+            }
 
             result = null; // fallback instead of exception
             return true;

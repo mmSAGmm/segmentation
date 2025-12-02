@@ -53,6 +53,15 @@ namespace Domain.Tests
         }
 
         [Fact]
+        public async Task TypeMissMatchEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["name"] = "1" });
+            WithExpression(@"x.name == 1");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(null);
+        }
+
+        [Fact]
         public async Task StringEvaluation()
         {
             WithProperties(new Dictionary<string, object> { ["name"] = "1" });
