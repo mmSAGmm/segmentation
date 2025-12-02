@@ -2,6 +2,25 @@
   "version": 3,
   "targets": {
     "net10.0": {
+      "BlazorMonaco/3.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "9.0.0",
+          "Microsoft.AspNetCore.Components.Web": "9.0.0"
+        },
+        "compile": {
+          "lib/net9.0/BlazorMonaco.dll": {}
+        },
+        "runtime": {
+          "lib/net9.0/BlazorMonaco.dll": {}
+        },
+        "build": {
+          "buildTransitive/BlazorMonaco.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/BlazorMonaco.props": {}
+        }
+      },
       "Microsoft.AspNetCore.App.Internal.Assets/10.0.0": {
         "type": "package",
         "build": {
@@ -10,6 +29,98 @@
         },
         "buildMultiTargeting": {
           "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authorization/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Metadata": "10.0.0",
+          "Microsoft.Extensions.Diagnostics": "10.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Authorization.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Authorization.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Authorization": "10.0.0",
+          "Microsoft.AspNetCore.Components.Analyzers": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components.Analyzers/10.0.0": {
+        "type": "package",
+        "build": {
+          "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
+        }
+      },
+      "Microsoft.AspNetCore.Components.Forms/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "10.0.0",
+          "Microsoft.Extensions.Validation": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.Forms.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.Forms.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Components.Web/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "10.0.0",
+          "Microsoft.AspNetCore.Components.Forms": "10.0.0",
+          "Microsoft.Extensions.DependencyInjection": "10.0.0",
+          "Microsoft.Extensions.Primitives": "10.0.0",
+          "Microsoft.JSInterop": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.Web.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Components.Web.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Metadata/10.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Microsoft.Extensions.AmbientMetadata.Application/10.0.0": {
@@ -590,6 +701,61 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Telemetry.Abstractions.targets": {}
         }
       },
+      "Microsoft.Extensions.Validation/10.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.Extensions.Validation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.Validation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.FluentUI.AspNetCore.Components/4.13.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "10.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.0",
+          "Microsoft.Extensions.Hosting.Abstractions": "10.0.0",
+          "Microsoft.Extensions.Http": "10.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.FluentUI.AspNetCore.Components.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.FluentUI.AspNetCore.Components.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Microsoft.FluentUI.AspNetCore.Components.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Microsoft.FluentUI.AspNetCore.Components.props": {}
+        }
+      },
+      "Microsoft.JSInterop/10.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Microsoft.JSInterop.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.JSInterop.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "OpenTelemetry/1.13.1": {
         "type": "package",
         "dependencies": {
@@ -814,6 +980,16 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "Segmentation.DomainModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/Segmentation.DomainModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Segmentation.DomainModels.dll": {}
+        }
+      },
       "Segmentation.ServiceDefaults/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
@@ -839,6 +1015,143 @@
     }
   },
   "libraries": {
+    "BlazorMonaco/3.4.0": {
+      "sha512": "oVdjF5t6pOJLj/XKlNlO4uXuYU+xsBMLak3ZL1Q7Zyb8vBTOhzibampmhSUVvfXWe5e4w0HTKBZwQvuTJ77smg==",
+      "type": "package",
+      "path": "blazormonaco/3.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "blazormonaco.3.4.0.nupkg.sha512",
+        "blazormonaco.nuspec",
+        "build/BlazorMonaco.props",
+        "build/Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/BlazorMonaco.props",
+        "buildTransitive/BlazorMonaco.props",
+        "icon.png",
+        "lib/net5.0/BlazorMonaco.dll",
+        "lib/net6.0/BlazorMonaco.dll",
+        "lib/net7.0/BlazorMonaco.dll",
+        "lib/net8.0/BlazorMonaco.dll",
+        "lib/net9.0/BlazorMonaco.dll",
+        "lib/netstandard2.0/BlazorMonaco.dll",
+        "staticwebassets/jsInterop.js",
+        "staticwebassets/lib/monaco-editor/min/vs/_commonjsHelpers-CT9FvmAN.js",
+        "staticwebassets/lib/monaco-editor/min/vs/abap-D-t0cyap.js",
+        "staticwebassets/lib/monaco-editor/min/vs/apex-CcIm7xu6.js",
+        "staticwebassets/lib/monaco-editor/min/vs/assets/css.worker-cO8rX8Iy.js",
+        "staticwebassets/lib/monaco-editor/min/vs/assets/editor.worker-DM0G1eFj.js",
+        "staticwebassets/lib/monaco-editor/min/vs/assets/html.worker-BruuIJkK.js",
+        "staticwebassets/lib/monaco-editor/min/vs/assets/json.worker-DghZTZS7.js",
+        "staticwebassets/lib/monaco-editor/min/vs/assets/ts.worker-C4E4vgbE.js",
+        "staticwebassets/lib/monaco-editor/min/vs/azcli-BA0tQDCg.js",
+        "staticwebassets/lib/monaco-editor/min/vs/basic-languages/monaco.contribution.js",
+        "staticwebassets/lib/monaco-editor/min/vs/bat-C397hTD6.js",
+        "staticwebassets/lib/monaco-editor/min/vs/bicep-DF5aW17k.js",
+        "staticwebassets/lib/monaco-editor/min/vs/cameligo-plsz8qhj.js",
+        "staticwebassets/lib/monaco-editor/min/vs/clojure-Y2auQMzK.js",
+        "staticwebassets/lib/monaco-editor/min/vs/coffee-Bu45yuWE.js",
+        "staticwebassets/lib/monaco-editor/min/vs/cpp-CkKPQIni.js",
+        "staticwebassets/lib/monaco-editor/min/vs/csharp-CX28MZyh.js",
+        "staticwebassets/lib/monaco-editor/min/vs/csp-D8uWnyxW.js",
+        "staticwebassets/lib/monaco-editor/min/vs/css-CaeNmE3S.js",
+        "staticwebassets/lib/monaco-editor/min/vs/cssMode-CGp6dFmI.js",
+        "staticwebassets/lib/monaco-editor/min/vs/cypher-DVThT8BS.js",
+        "staticwebassets/lib/monaco-editor/min/vs/dart-CmGfCvrO.js",
+        "staticwebassets/lib/monaco-editor/min/vs/dockerfile-CZqqYdch.js",
+        "staticwebassets/lib/monaco-editor/min/vs/ecl-30fUercY.js",
+        "staticwebassets/lib/monaco-editor/min/vs/editor.api-i0YVFWkl.js",
+        "staticwebassets/lib/monaco-editor/min/vs/editor/editor.main.css",
+        "staticwebassets/lib/monaco-editor/min/vs/editor/editor.main.js",
+        "staticwebassets/lib/monaco-editor/min/vs/elixir-xjPaIfzF.js",
+        "staticwebassets/lib/monaco-editor/min/vs/flow9-DqtmStfK.js",
+        "staticwebassets/lib/monaco-editor/min/vs/freemarker2-CJME-ah8.js",
+        "staticwebassets/lib/monaco-editor/min/vs/fsharp-BOMdg4U1.js",
+        "staticwebassets/lib/monaco-editor/min/vs/go-D_hbi-Jt.js",
+        "staticwebassets/lib/monaco-editor/min/vs/graphql-CKUU4kLG.js",
+        "staticwebassets/lib/monaco-editor/min/vs/handlebars-NccI6MVO.js",
+        "staticwebassets/lib/monaco-editor/min/vs/hcl-DTaboeZW.js",
+        "staticwebassets/lib/monaco-editor/min/vs/html-K7M-xuod.js",
+        "staticwebassets/lib/monaco-editor/min/vs/htmlMode-DtjCNH-N.js",
+        "staticwebassets/lib/monaco-editor/min/vs/ini-CsNwO04R.js",
+        "staticwebassets/lib/monaco-editor/min/vs/java-CI4ZMsH9.js",
+        "staticwebassets/lib/monaco-editor/min/vs/javascript-CUpTMdAr.js",
+        "staticwebassets/lib/monaco-editor/min/vs/jsonMode-CJjR_ECa.js",
+        "staticwebassets/lib/monaco-editor/min/vs/julia-BwzEvaQw.js",
+        "staticwebassets/lib/monaco-editor/min/vs/kotlin-BLeVJFaw.js",
+        "staticwebassets/lib/monaco-editor/min/vs/language/css/monaco.contribution.js",
+        "staticwebassets/lib/monaco-editor/min/vs/language/html/monaco.contribution.js",
+        "staticwebassets/lib/monaco-editor/min/vs/language/json/monaco.contribution.js",
+        "staticwebassets/lib/monaco-editor/min/vs/language/typescript/monaco.contribution.js",
+        "staticwebassets/lib/monaco-editor/min/vs/less-C0eDYdqa.js",
+        "staticwebassets/lib/monaco-editor/min/vs/lexon-iON-Kj97.js",
+        "staticwebassets/lib/monaco-editor/min/vs/liquid-STktYroN.js",
+        "staticwebassets/lib/monaco-editor/min/vs/loader.js",
+        "staticwebassets/lib/monaco-editor/min/vs/lspLanguageFeatures-A02kBDb6.js",
+        "staticwebassets/lib/monaco-editor/min/vs/lua-DtygF91M.js",
+        "staticwebassets/lib/monaco-editor/min/vs/m3-CsR4AuFi.js",
+        "staticwebassets/lib/monaco-editor/min/vs/markdown-C_rD0bIw.js",
+        "staticwebassets/lib/monaco-editor/min/vs/mdx-C6mq4H94.js",
+        "staticwebassets/lib/monaco-editor/min/vs/mips-CiYP61RB.js",
+        "staticwebassets/lib/monaco-editor/min/vs/msdax-C38-sJlp.js",
+        "staticwebassets/lib/monaco-editor/min/vs/mysql-CdtbpvbG.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages-loader.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.de.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.es.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.fr.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.it.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.ja.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.ko.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.ru.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.zh-cn.js",
+        "staticwebassets/lib/monaco-editor/min/vs/nls.messages.zh-tw.js",
+        "staticwebassets/lib/monaco-editor/min/vs/objective-c-CntZFaHX.js",
+        "staticwebassets/lib/monaco-editor/min/vs/pascal-r6kuqfl_.js",
+        "staticwebassets/lib/monaco-editor/min/vs/pascaligo-BiXoTmXh.js",
+        "staticwebassets/lib/monaco-editor/min/vs/perl-DABw_TcH.js",
+        "staticwebassets/lib/monaco-editor/min/vs/pgsql-me_jFXeX.js",
+        "staticwebassets/lib/monaco-editor/min/vs/php-D_kh-9LK.js",
+        "staticwebassets/lib/monaco-editor/min/vs/pla-VfZjczW0.js",
+        "staticwebassets/lib/monaco-editor/min/vs/postiats-BBSzz8Pk.js",
+        "staticwebassets/lib/monaco-editor/min/vs/powerquery-Dt-g_2cc.js",
+        "staticwebassets/lib/monaco-editor/min/vs/powershell-B-7ap1zc.js",
+        "staticwebassets/lib/monaco-editor/min/vs/protobuf-BmtuEB1A.js",
+        "staticwebassets/lib/monaco-editor/min/vs/pug-BRpRNeEb.js",
+        "staticwebassets/lib/monaco-editor/min/vs/python-B-Y2SC3b.js",
+        "staticwebassets/lib/monaco-editor/min/vs/qsharp-BzsFaUU9.js",
+        "staticwebassets/lib/monaco-editor/min/vs/r-f8dDdrp4.js",
+        "staticwebassets/lib/monaco-editor/min/vs/razor-JzN5FpSg.js",
+        "staticwebassets/lib/monaco-editor/min/vs/redis-fvZQY4PI.js",
+        "staticwebassets/lib/monaco-editor/min/vs/redshift-45Et0LQi.js",
+        "staticwebassets/lib/monaco-editor/min/vs/restructuredtext-C7UUFKFD.js",
+        "staticwebassets/lib/monaco-editor/min/vs/ruby-CZO8zYTz.js",
+        "staticwebassets/lib/monaco-editor/min/vs/rust-Bfetafyc.js",
+        "staticwebassets/lib/monaco-editor/min/vs/sb-3GYllVck.js",
+        "staticwebassets/lib/monaco-editor/min/vs/scala-foMgrKo1.js",
+        "staticwebassets/lib/monaco-editor/min/vs/scheme-CHdMtr7p.js",
+        "staticwebassets/lib/monaco-editor/min/vs/scss-C1cmLt9V.js",
+        "staticwebassets/lib/monaco-editor/min/vs/shell-ClXCKCEW.js",
+        "staticwebassets/lib/monaco-editor/min/vs/solidity-MZ6ExpPy.js",
+        "staticwebassets/lib/monaco-editor/min/vs/sophia-DWkuSsPQ.js",
+        "staticwebassets/lib/monaco-editor/min/vs/sparql-AUGFYSyk.js",
+        "staticwebassets/lib/monaco-editor/min/vs/sql-32GpJSV2.js",
+        "staticwebassets/lib/monaco-editor/min/vs/st-CuDFIVZ_.js",
+        "staticwebassets/lib/monaco-editor/min/vs/swift-n-2HociN.js",
+        "staticwebassets/lib/monaco-editor/min/vs/systemverilog-Ch4vA8Yt.js",
+        "staticwebassets/lib/monaco-editor/min/vs/tcl-D74tq1nH.js",
+        "staticwebassets/lib/monaco-editor/min/vs/tsMode-i88JHxDY.js",
+        "staticwebassets/lib/monaco-editor/min/vs/twig-C6taOxMV.js",
+        "staticwebassets/lib/monaco-editor/min/vs/typescript-4zug7YwV.js",
+        "staticwebassets/lib/monaco-editor/min/vs/typespec-D-PIh9Xw.js",
+        "staticwebassets/lib/monaco-editor/min/vs/vb-Dyb2648j.js",
+        "staticwebassets/lib/monaco-editor/min/vs/wgsl-BhLXMOR0.js",
+        "staticwebassets/lib/monaco-editor/min/vs/workers-CbP2cVmy.js",
+        "staticwebassets/lib/monaco-editor/min/vs/xml-DRHZuZwg.js",
+        "staticwebassets/lib/monaco-editor/min/vs/yaml-CkWIGXBM.js"
+      ]
+    },
     "Microsoft.AspNetCore.App.Internal.Assets/10.0.0": {
       "sha512": "0gZrESKwnlmbE8Br8XIy3kk7Pj0++9T2Ly+A8BFYYgo5EgfqWEln26cho+l92KOaHUzclhvz314RiwE910s24g==",
       "type": "package",
@@ -860,6 +1173,105 @@
         "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512",
         "microsoft.aspnetcore.app.internal.assets.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Authorization/10.0.0": {
+      "sha512": "8qUwBAtUj9kX8RwqEPGJu3zGM/GlwF2bR9gsxk/+kiSmCB6aDYlYF7E2gM9VOYS9NDF6zxTSEgJxwD9kFbu8Sw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authorization/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.AspNetCore.Authorization.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Authorization.xml",
+        "lib/net462/Microsoft.AspNetCore.Authorization.dll",
+        "lib/net462/Microsoft.AspNetCore.Authorization.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
+        "microsoft.aspnetcore.authorization.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.authorization.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Components/10.0.0": {
+      "sha512": "ljLBmYTPkIe/WhOn/y3kpMCJ4A/xg76H/SRm9XkoOBqlM96Ntcbr+WFJqV/0bEqjaUqQYIMITPnJXrVJ242cWQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "lib/net10.0/Microsoft.AspNetCore.Components.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Components.xml",
+        "microsoft.aspnetcore.components.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.components.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Components.Analyzers/10.0.0": {
+      "sha512": "5j9dQ/U51yLLKo8hKJOU7uTPppPsjLTua0PFzRotaePcmz7M9W7pM69pBXDEgkBfGD1tp2ufH0zHRHkwg1ikDg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.analyzers/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
+        "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
+        "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
+        "microsoft.aspnetcore.components.analyzers.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Components.Forms/10.0.0": {
+      "sha512": "5kMwH8DqYFfUpyMNv+IzIoDHxR8fHTPKeJeFNAyjY5tMxo3yyM7ezmuYNcVt9QJ+6K2soHQjBnCvFs8yNd3UGQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.forms/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "lib/net10.0/Microsoft.AspNetCore.Components.Forms.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Components.Forms.xml",
+        "microsoft.aspnetcore.components.forms.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.components.forms.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Components.Web/10.0.0": {
+      "sha512": "TAv9+cOrU27YPKuHE7AlG2UBWtTWivvcDHmfdN2yngzQFtas+3p2IBDAF6odNfOJiW3Cs1lHwzqLAoNw5Sc59Q==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.components.web/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.txt",
+        "lib/net10.0/Microsoft.AspNetCore.Components.Web.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Components.Web.xml",
+        "microsoft.aspnetcore.components.web.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.components.web.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.Metadata/10.0.0": {
+      "sha512": "uMXReBNxJKabrdoxHn4LNDTlGQFGDPtntlVvqo/b0HaxJzeDAIMFXJJ64mufJCNRuQU/Pus8ngcTZErvnsh7vg==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.metadata/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.AspNetCore.Metadata.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Metadata.xml",
+        "lib/net462/Microsoft.AspNetCore.Metadata.dll",
+        "lib/net462/Microsoft.AspNetCore.Metadata.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
+        "microsoft.aspnetcore.metadata.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.metadata.nuspec"
       ]
     },
     "Microsoft.Extensions.AmbientMetadata.Application/10.0.0": {
@@ -1713,6 +2125,100 @@
         "microsoft.extensions.telemetry.abstractions.nuspec"
       ]
     },
+    "Microsoft.Extensions.Validation/10.0.0": {
+      "sha512": "viIKcmaf1akdhx77c+dLkODvhL+HyonHNpBsicndoi47zvbSeHJEWPOk188NnFCh+dCUz7Icld1jPMbS5E2fqw==",
+      "type": "package",
+      "path": "microsoft.extensions.validation/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/cs/Microsoft.Extensions.Validation.ValidationsGenerator.dll",
+        "lib/net10.0/Microsoft.Extensions.Validation.dll",
+        "lib/net10.0/Microsoft.Extensions.Validation.xml",
+        "microsoft.extensions.validation.10.0.0.nupkg.sha512",
+        "microsoft.extensions.validation.nuspec"
+      ]
+    },
+    "Microsoft.FluentUI.AspNetCore.Components/4.13.2": {
+      "sha512": "OqJFJiIz32BRBcxVCLX51s6/SNXVe6X16kKBcwxb7ZzZ14w1pT2OcHtqPxfj7NYZzAyA9gpX5EhvAdGHURYD7g==",
+      "type": "package",
+      "path": "microsoft.fluentui.aspnetcore.components/4.13.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "build/Microsoft.FluentUI.AspNetCore.Components.props",
+        "buildMultiTargeting/Microsoft.FluentUI.AspNetCore.Components.props",
+        "buildTransitive/Microsoft.FluentUI.AspNetCore.Components.props",
+        "icon.png",
+        "lib/net10.0/Microsoft.FluentUI.AspNetCore.Components.dll",
+        "lib/net10.0/Microsoft.FluentUI.AspNetCore.Components.xml",
+        "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.dll",
+        "lib/net8.0/Microsoft.FluentUI.AspNetCore.Components.xml",
+        "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.dll",
+        "lib/net9.0/Microsoft.FluentUI.AspNetCore.Components.xml",
+        "microsoft.fluentui.aspnetcore.components.4.13.2.nupkg.sha512",
+        "microsoft.fluentui.aspnetcore.components.nuspec",
+        "staticwebassets/Components/Accordion/FluentAccordionItem.razor.js",
+        "staticwebassets/Components/Anchor/FluentAnchor.razor.js",
+        "staticwebassets/Components/AnchoredRegion/FluentAnchoredRegion.razor.js",
+        "staticwebassets/Components/Button/FluentButton.razor.js",
+        "staticwebassets/Components/Checkbox/FluentCheckbox.razor.js",
+        "staticwebassets/Components/DataGrid/FluentDataGrid.razor.js",
+        "staticwebassets/Components/DateTime/FluentTimePicker.razor.js",
+        "staticwebassets/Components/DesignSystemProvider/FluentDesignTheme.razor.js",
+        "staticwebassets/Components/Dialog/FluentDialogProvider.razor.js",
+        "staticwebassets/Components/Divider/FluentDivider.razor.js",
+        "staticwebassets/Components/Grid/FluentGrid.razor.js",
+        "staticwebassets/Components/HorizontalScroll/FluentHorizontalScroll.razor.js",
+        "staticwebassets/Components/InputFile/FluentInputFile.razor.js",
+        "staticwebassets/Components/KeyCode/FluentKeyCode.razor.js",
+        "staticwebassets/Components/Label/FluentInputLabel.razor.js",
+        "staticwebassets/Components/List/FluentAutocomplete.razor.js",
+        "staticwebassets/Components/List/FluentCombobox.razor.js",
+        "staticwebassets/Components/List/ListComponentBase.razor.js",
+        "staticwebassets/Components/Menu/FluentMenu.razor.js",
+        "staticwebassets/Components/NavMenu/FluentNavMenu.razor.js",
+        "staticwebassets/Components/Overflow/FluentOverflow.razor.js",
+        "staticwebassets/Components/Overlay/FluentOverlay.razor.js",
+        "staticwebassets/Components/PullToRefresh/FluentPullToRefresh.razor.js",
+        "staticwebassets/Components/Search/FluentSearch.razor.js",
+        "staticwebassets/Components/Slider/FluentSlider.razor.js",
+        "staticwebassets/Components/Slider/FluentSliderLabel.razor.js",
+        "staticwebassets/Components/SortableList/FluentSortableList.razor.js",
+        "staticwebassets/Components/Splitter/FluentMultiSplitter.razor.js",
+        "staticwebassets/Components/Tabs/FluentTab.razor.js",
+        "staticwebassets/Components/TextField/FluentTextField.razor.js",
+        "staticwebassets/Components/Toolbar/FluentToolbar.razor.js",
+        "staticwebassets/Components/Tooltip/FluentTooltip.razor.js",
+        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.ewdlgswx1m.bundle.scp.css",
+        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js",
+        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.LEGAL.txt",
+        "staticwebassets/Microsoft.FluentUI.AspNetCore.Components.lib.module.js.map",
+        "staticwebassets/css/reboot.css",
+        "staticwebassets/js/initializersLoader.webview.js",
+        "staticwebassets/js/loading-theme.js"
+      ]
+    },
+    "Microsoft.JSInterop/10.0.0": {
+      "sha512": "Qfs4KtmfMUQ/BtD4jdt753kiAa7frm1QVms8UHiFArOokoXBkBOOKE2N5APdt3BlAdTSFJNiuDFfgDzVq/3EZg==",
+      "type": "package",
+      "path": "microsoft.jsinterop/10.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.JSInterop.dll",
+        "lib/net10.0/Microsoft.JSInterop.xml",
+        "microsoft.jsinterop.10.0.0.nupkg.sha512",
+        "microsoft.jsinterop.nuspec"
+      ]
+    },
     "OpenTelemetry/1.13.1": {
       "sha512": "rrM2NlZ0Xla2Ar8zzU09n+HoLFq8b+Kjx7vrmR0tdYfWLYWGNcXHOITXUiyaK8RrFEceMEoF45VBsaf4QPmKcg==",
       "type": "package",
@@ -2079,6 +2585,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Segmentation.DomainModels/1.0.0": {
+      "type": "project",
+      "path": "../Segmentation.DomainModels/Segmentation.DomainModels.csproj",
+      "msbuildProject": "../Segmentation.DomainModels/Segmentation.DomainModels.csproj"
+    },
     "Segmentation.ServiceDefaults/1.0.0": {
       "type": "project",
       "path": "../Segmentation.ServiceDefaults/Segmentation.ServiceDefaults.csproj",
@@ -2087,7 +2598,10 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "BlazorMonaco >= 3.4.0",
       "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.0",
+      "Microsoft.FluentUI.AspNetCore.Components >= 4.13.2",
+      "Segmentation.DomainModels >= 1.0.0",
       "Segmentation.ServiceDefaults >= 1.0.0"
     ]
   },
@@ -2124,6 +2638,9 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
+            "C:\\Segmentation\\Segmentation.DomainModels\\Segmentation.DomainModels.csproj": {
+              "projectPath": "C:\\Segmentation\\Segmentation.DomainModels\\Segmentation.DomainModels.csproj"
+            },
             "C:\\Segmentation\\Segmentation.ServiceDefaults\\Segmentation.ServiceDefaults.csproj": {
               "projectPath": "C:\\Segmentation\\Segmentation.ServiceDefaults\\Segmentation.ServiceDefaults.csproj"
             }
@@ -2146,11 +2663,19 @@
       "net10.0": {
         "targetAlias": "net10.0",
         "dependencies": {
+          "BlazorMonaco": {
+            "target": "Package",
+            "version": "[3.4.0, )"
+          },
           "Microsoft.AspNetCore.App.Internal.Assets": {
             "suppressParent": "All",
             "target": "Package",
             "version": "[10.0.0, )",
             "autoReferenced": true
+          },
+          "Microsoft.FluentUI.AspNetCore.Components": {
+            "target": "Package",
+            "version": "[4.13.2, )"
           }
         },
         "imports": [

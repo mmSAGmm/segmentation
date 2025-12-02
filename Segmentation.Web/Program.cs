@@ -1,3 +1,4 @@
+using Microsoft.FluentUI.AspNetCore.Components;
 using Segmentation.Web;
 using Segmentation.Web.Components;
 
@@ -12,12 +13,24 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddOutputCache();
 
+builder.Services.AddFluentUIComponents(options =>
+{
+    options.ValidateClassNames = false;
+});
+builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
     {
         // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
         // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
         client.BaseAddress = new("https+http://apiservice");
     });
+
+builder.Services.AddHttpClient<SegmentsApiClient>(client =>
+{
+    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+    client.BaseAddress = new("https+http://apiservice");
+});
 
 var app = builder.Build();
 

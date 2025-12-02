@@ -43,11 +43,11 @@ namespace Segmentation.ApiService.Handlers
         }
 
         public static async Task<IEnumerable<Segment>> SegmentsPage(
-            int pageNumber, 
-            int pageSize, 
+            int number, 
+            int size, 
             ISegmentAdminService service, CancellationToken token)
         {
-            return await service.GetPage(pageNumber, pageSize, token);
+            return await service.GetPage(number, size, token);
         }
     }
 }

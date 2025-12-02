@@ -1,0 +1,44 @@
+﻿@page "/segments"
+@rendermode InteractiveServer
+@using Microsoft.FluentUI.AspNetCore.Components
+@using Segmentation.DomainModels
+
+@inject SegmentsApiClient SegmentsApiClient
+
+<PageTitle>Segments</PageTitle>
+
+<h1>Segments</h1>
+
+@if (segments == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <FluentListbox TOption="string" ValueChanged="@(e => listboxValue = e)">
+        @foreach (var segment in segments)
+        {
+            <FluentOption Value="@segment.Id.ToString()">@(segment.Name+":"+segment.Expression)</FluentOption>
+        }
+    </FluentListbox>
+}
+
+@code {
+    string? listboxValue = string.Empty;
+    IEnumerable<Segment>? segments = null;
+
+    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    {
+        return new StandaloneEditorConstructionOptions
+        {
+            AutomaticLayout = true,
+            Language = "javascript",
+            Value = "()=> x.name == 22"
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        segments = await SegmentsApiClient.GetSegmentPage(CancellationToken.None);
+    }
+}

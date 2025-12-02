@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazorMonaco" Version="3.4.0" />
+    <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.13.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Segmentation.DomainModels\Segmentation.DomainModels.csproj" />
     <ProjectReference Include="..\Segmentation.ServiceDefaults\Segmentation.ServiceDefaults.csproj" />
   </ItemGroup>
 
