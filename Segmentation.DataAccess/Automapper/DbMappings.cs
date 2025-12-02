@@ -15,6 +15,7 @@ namespace Segmentation.DataAccess.Automapper
             CreateMap<SegmentDbModel, Segment>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)))
                 .ForMember(dest => dest.Expression, opt => opt.MapFrom(src => src.Expression))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ReverseMap();
         }
     }

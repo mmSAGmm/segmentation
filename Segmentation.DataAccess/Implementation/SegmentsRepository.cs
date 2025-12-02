@@ -22,7 +22,7 @@ namespace Segmentation.DataAccess.Implementation
 
         public async Task<Guid> Add(Segment segment, CancellationToken token)
         {
-            await Connection.ExecuteAsync($"INSERT INTO Segments(Id, Expression) VALUES(@Id, @Expression)", segment, commandTimeout: option.Value.TimeoutSeconds);
+            await Connection.ExecuteAsync($"INSERT INTO Segments(Id, Expression, Name) VALUES(@Id, @Expression, @Name)", segment, commandTimeout: option.Value.TimeoutSeconds);
             return segment.Id;
         }
 
@@ -54,15 +54,17 @@ namespace Segmentation.DataAccess.Implementation
         public async Task Init()
         {
             await Connection.ExecuteAsync(@$"
+DROP TABLE Segments;
 CREATE TABLE Segments (
     Id VARCHAR(20) PRIMARY KEY,
+    Name VARCHAR(20),
     Expression TEXT NOT NULL
 );");
         }
 
         public async Task Update(Segment segment, CancellationToken token)
         {
-            await Connection.ExecuteAsync($"Update Segments SET Expression = @Expression WHERE Id = @Id",
+            await Connection.ExecuteAsync($"Update Segments SET Expression = @Expression, Name = @Name WHERE Id = @Id",
                 segment,
                 commandTimeout: option.Value.TimeoutSeconds);
         }
