@@ -15,29 +15,76 @@
 }
 else
 {
-    <FluentListbox TOption="string" ValueChanged="@(e => listboxValue = e)">
+    <FluentListbox TOption="string" ValueChanged="@(OnValueChange)">
         @foreach (var segment in segments)
         {
-            <FluentOption Value="@segment.Id.ToString()">@(segment.Name+":"+segment.Expression)</FluentOption>
+            <FluentOption Value="@segment.Id.ToString()">@(segment.Name)</FluentOption>
         }
     </FluentListbox>
+
+    <p>Id</p>
+    <FluentTextField @bind-Value=id AriaLabel="No label"></FluentTextField>
+
+    <p>Name</p>
+    <FluentTextField @bind-Value=name AriaLabel="No label"></FluentTextField>
+
+    <p>Expression</p>
+    <FluentTextArea @bind-Value=expression Rows="12"></FluentTextArea>
+
+    <FluentButton Appearance="Appearance.Accent" OnClick="@OnSaveClick">Save</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" OnClick="@OnNewClick">New</FluentButton>
 }
 
 @code {
-    string? listboxValue = string.Empty;
+    string? expression = string.Empty;
+    string? name = string.Empty;
+    string? id = string.Empty;
     IEnumerable<Segment>? segments = null;
 
-    private StandaloneEditorConstructionOptions EditorConstructionOptions(StandaloneCodeEditor editor)
+    private void OnValueChange(string e)
     {
-        return new StandaloneEditorConstructionOptions
+        id = e;
+        var segment = segments?.FirstOrDefault(x => x.Id.ToString() == e);
+        expression = segment?.Expression;
+        name = segment?.Name;
+    }
+    
+    private async Task OnNewClick()
+    {
+        id = string.Empty;
+        expression = string.Empty;
+        name = string.Empty;
+    }
+    
+    private async Task OnSaveClick()
+    {
+        Guid localId = Guid.Empty;
+        Guid.TryParse(id, out localId);
+
+        var segment = new Segment
         {
-            AutomaticLayout = true,
-            Language = "javascript",
-            Value = "()=> x.name == 22"
+            Id = localId,
+            Name = name,
+            Expression = expression
         };
+        if (localId != Guid.Empty)
+        {
+            await SegmentsApiClient.Update(segment, CancellationToken.None);
+        }
+        else
+        {
+            await SegmentsApiClient.Create(segment, CancellationToken.None);
+
+        }
+        await Reload();
     }
 
     protected override async Task OnInitializedAsync()
+    {
+        await Reload();
+    }
+
+    private async Task Reload()
     {
         segments = await SegmentsApiClient.GetSegmentPage(CancellationToken.None);
     }

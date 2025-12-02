@@ -10,5 +10,15 @@ namespace Segmentation.Web
         {
             return await httpClient.GetFromJsonAsync<IEnumerable<Segment>>($"/api/admin/v1/segment/page/{1}/{20}", cancellationToken);
         }
+
+        public async Task Update(Segment segment, CancellationToken cancellationToken) 
+        {
+            await httpClient.PutAsJsonAsync("api/admin/v1/segment", segment, cancellationToken);
+        }
+
+        public async Task Create(Segment segment, CancellationToken cancellationToken)
+        {
+            await httpClient.PostAsJsonAsync("api/admin/v1/segment", segment, cancellationToken);
+        }
     }
 }
