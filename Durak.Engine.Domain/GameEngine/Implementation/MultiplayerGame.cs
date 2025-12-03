@@ -141,7 +141,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
 
         private void CleanupEmplyUsers() 
         {
-            var toRemove = players.Where(x => !x.Hand.Any());
+            var toRemove = players.Where(x => !x.Hand.Any()).ToList();
             foreach (var player in toRemove)
             {
                 players.Remove(player);
