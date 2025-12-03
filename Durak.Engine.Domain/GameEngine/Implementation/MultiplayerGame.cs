@@ -32,16 +32,19 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             MoveGameState(GameState.PendingAttack);
         }
 
-        public void Attack(Card attackCard)
+        public bool TryAttack(Card attackCard)
         {
             if (state == GameState.PendingAttack
                 && attackCard is not null
-                && TryAttack(attackCard)
+                && CanAttack(attackCard)
                 && attacker.TryTakeCard(attackCard))
             {
                 activeStack.Push(attackCard);
                 MoveGameState(GameState.PendingDefence);
+                return true;
             }
+
+            return false;
         }
 
         public bool TryDeffend(Card defendCard)
@@ -51,6 +54,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
                 && CanBeat(attackCard, defendCard)
                 && defender.TryTakeCard(defendCard))
             {
+                activeStack.Push(defendCard);
                 MoveGameState(GameState.PendingAttack);
                 return true;
             }
@@ -58,13 +62,23 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             return false;
         }
 
-        public void RoundEnd()
+        public bool TryEndRound()
         {
-            DiscardActiveStack();
-            RefillCards();
-            CleanupEmplyUsers();
-            MoveToNextPlayer();
-            MoveGameState(NextState());
+            if (CanEndRound())
+            {
+                DiscardActiveStack();
+                RefillCards();
+                CleanupEmplyUsers();
+                MoveToNextPlayer();
+                MoveGameState(NextState());
+                return true;
+            }
+            return false;
+        }
+
+        private bool CanEndRound() 
+        {
+            return activeStack.Any() && state == GameState.PendingAttack;
         }
 
         private GameState NextState() 
@@ -99,7 +113,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             return false;
         }
 
-        private bool TryAttack(Card attackCard)
+        private bool CanAttack(Card attackCard)
         {
             if (!activeStack.Any() || activeStack.Any(x => x.Rank == attackCard.Rank))
             {

@@ -8,10 +8,10 @@ namespace Durak.Engine.Domain.GameEngine.Abtractions
     {
         public void Start();
 
-        public void Attack(Card card);
+        public bool TryAttack(Card card);
 
         public bool TryDeffend(Card action);
 
-        public void RoundEnd();
+        public bool TryEndRound();
     }
 }
