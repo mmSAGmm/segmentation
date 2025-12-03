@@ -6,6 +6,6 @@ namespace Segmentation.Domain.Options
 {
     public class EvaluationOption
     {
-        public bool UseTypeMissmatchWapper { get; set; } = true;
+        public bool UseTypeMissmatchWapper { get; set; } = false;
     }
 }

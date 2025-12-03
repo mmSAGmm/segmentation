@@ -20,9 +20,15 @@ namespace Domain.Tests
         public EvaluationServiceTests()
         {
             mocker.Use<IExpressionCompilationService>(new ExpressionCompilationService());
-            mocker.Use<IOptions<EvaluationOption>>(Options.Create<EvaluationOption>(new EvaluationOption()));
+            WithTypeMissmatchWrapper(false);
         }
 
+
+        public void WithTypeMissmatchWrapper(bool useWrapper)
+        {
+            mocker.Use<IOptions<EvaluationOption>>(Options.Create<EvaluationOption>(new EvaluationOption { UseTypeMissmatchWapper = useWrapper }));
+
+        }
         public void WithExpression(string expression)
         {
             var mock = mocker.GetMock<ISegmentAdminService>();
@@ -94,6 +100,7 @@ namespace Domain.Tests
         [Fact]
         public async Task TypeMissMatchEvaluation()
         {
+            WithTypeMissmatchWrapper(true);
             WithProperties(new Dictionary<string, object> { ["name"] = "1" });
             WithExpression(@"x.name == 1");
             var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
@@ -121,6 +128,21 @@ namespace Domain.Tests
             WithExpression(@"x.name == ""1"" && x.name1 == 2");
             var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
             result.ShouldBe(true);
+        }
+
+        [Fact]
+        public async Task WithoutTypeMissmatch()
+        {
+            WithTypeMissmatchWrapper(false);
+            WithProperties(new Dictionary<string, object>
+            {
+                ["name"] = "1",
+                ["name1"] = 2,
+                ["name2"] = "1",
+            });
+            WithExpression(@"x.name == 1 && x.name1 == 2");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(null);
         }
     }
 }
