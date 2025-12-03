@@ -5,15 +5,24 @@ using System.Text;
 
 namespace Durak.Engine.Domain.GameEngine.Implementation
 {
-    public class MultiplayerGame(List<Player> players, Deck deck) : IGame
+    public class MultiplayerGame : IGame
     {
+        public MultiplayerGame(List<Player> players, Deck deck)
+        {
+            this.players = players;
+            this.deck = deck;
+        }
         private Guid Id { get; set; } = Guid.NewGuid();
+
+        internal List<Player> players;
+        
+        internal Deck deck;
 
         private List<Card> discard = new(52);
 
-        public Player Attacker { get; set; }
+        public Player? Attacker { get; set; }
 
-        public Player Defender { get; set; }
+        public Player? Defender { get; set; }
 
         internal GameState state;
 

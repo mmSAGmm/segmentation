@@ -13,6 +13,7 @@ namespace Durak.Engine.Domain.Tests
         public MultiplayerGame Subject => _subject ??= mocker.CreateInstance<MultiplayerGame>();
 
         private readonly Card[] cards = new Card[] {
+                new(Suit.Spades, Rank.Six),
                 new(Suit.Hearts, Rank.Six),//1
                 new(Suit.Hearts, Rank.Seven),//2
                 new(Suit.Hearts, Rank.Eight),//3
@@ -45,6 +46,7 @@ namespace Durak.Engine.Domain.Tests
             WithDeck(ToQueue(cards), Suit.Hearts);
             WithUsers(players);
             
+            Subject.state.ShouldBe(GameState.Created);
             Subject.Start();
             
             Subject.state.ShouldBe(GameState.PendingAttack);
@@ -66,9 +68,34 @@ namespace Durak.Engine.Domain.Tests
                 .ShouldBeTrue();
 
             Subject.Attacker.Hand.Count.ShouldBe(5);
-            Subject.Defender.Hand.Count.ShouldBe(5);
+            Subject.Defender.Hand.Count.ShouldBe(6);
             ShouldSwapPlayers(attacker, defender);
             Subject.state.ShouldBe(GameState.PendingAttack);
+        }
+
+        [Fact]
+        public void WhenAttackSeveralTimes()
+        {
+            WithDeck(ToQueue(cards), Suit.Hearts);
+            WithUsers(players);
+
+            Subject.Start();
+
+            Subject.TryAttack(Subject.Attacker.Hand.First())
+                .ShouldBe(true);
+
+            Subject.TryDeffend(Subject.Defender.Hand.First(x=>x.Suit == Subject.deck.TrumpSuit))
+                .ShouldBe(true);
+
+            Subject.TryAttack(Subject.Attacker.Hand.First())
+                .ShouldBe(true);
+
+            Subject.TryDeffend(Subject.Defender.Hand.First(x => x.Suit == Subject.deck.TrumpSuit))
+                .ShouldBe(true);
+            Subject.TryEndRound().ShouldBeTrue();
+
+            Subject.Attacker.Hand.Count.ShouldBe(4);
+            Subject.Defender.Hand.Count.ShouldBe(5);
         }
 
         [Fact]
@@ -76,7 +103,7 @@ namespace Durak.Engine.Domain.Tests
         {
             WithDeck(ToQueue(cards), Suit.Hearts);
             WithUsers(players);
-            
+
             Subject.Start();
 
             var attacker = Subject.Attacker;
@@ -88,6 +115,7 @@ namespace Durak.Engine.Domain.Tests
                 .ShouldBeTrue();
 
             ShouldSkipDefender(attacker, defender);
+            Subject.state.ShouldBe(GameState.PendingAttack);
         }
 
         private void ShouldSwapPlayers(Player oldAttacker, Player oldDefender)
