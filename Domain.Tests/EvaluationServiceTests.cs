@@ -1,7 +1,9 @@
+using Microsoft.Extensions.Options;
 using Moq;
 using Moq.AutoMock;
 using Segmentation.Domain.Abstractions;
 using Segmentation.Domain.Implementation;
+using Segmentation.Domain.Options;
 using Segmentation.DomainModels;
 using Shouldly;
 using System.Linq.Expressions;
@@ -18,6 +20,7 @@ namespace Domain.Tests
         public EvaluationServiceTests()
         {
             mocker.Use<IExpressionCompilationService>(new ExpressionCompilationService());
+            mocker.Use<IOptions<EvaluationOption>>(Options.Create<EvaluationOption>(new EvaluationOption()));
         }
 
         public void WithExpression(string expression)
@@ -66,6 +69,24 @@ namespace Domain.Tests
         {
             WithProperties(new Dictionary<string, object> { ["name"] = 11 });
             WithExpression(@"x.name%10 == 1");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
+        }
+
+        [Fact]
+        public async Task InvertBoolEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["b"] = false });
+            WithExpression(@"x.b == false");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
+        }
+
+        [Fact]
+        public async Task BoolEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["b"] = true });
+            WithExpression(@"x.b == true");
             var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
             result.ShouldBe(true);
         }

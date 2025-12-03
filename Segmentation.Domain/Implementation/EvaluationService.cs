@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Segmentation.Domain.Abstractions;
 using Segmentation.Domain.Models;
+using Segmentation.Domain.Options;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -15,6 +17,7 @@ namespace Segmentation.Domain.Implementation
         IExpressionCompilationService expressionService,
         IExpressionCache expressionCache,
         ILoggerFactory loggerFactory,
+        IOptions<EvaluationOption> options,
         ILogger<EvaluationService> logger) : IEvaluationService
     {
         public async Task<bool?> Evaluate(Guid segmentId, string propertiesId, CancellationToken token)
@@ -57,7 +60,14 @@ namespace Segmentation.Domain.Implementation
                     };
                 }
 
-                container[kvp.Key] = new TypeMissmatchDynamicWrapper(value, loggerFactory.CreateLogger<TypeMissmatchDynamicWrapper>());
+                if (options.Value.UseTypeMissmatchWapper)
+                {
+                    container[kvp.Key] = new TypeMissmatchDynamicWrapper(value, loggerFactory.CreateLogger<TypeMissmatchDynamicWrapper>());
+                }
+                else 
+                {
+                    container[kvp.Key] = value;
+                }
             }
             return new SafeDynamic(container);
         }
