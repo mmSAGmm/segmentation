@@ -5,26 +5,24 @@ using System.Text;
 
 namespace Durak.Engine.Domain.GameEngine.Implementation
 {
-    public class MultiplayerGame(List<Player> players) : IGame
+    public class MultiplayerGame(List<Player> players, Deck deck) : IGame
     {
         private Guid Id { get; set; } = Guid.NewGuid();
 
-        private Deck deck = new Deck();
-
         private List<Card> discard = new(52);
 
-        private Player attacker;
+        public Player Attacker { get; set; }
 
-        private Player defender;
+        public Player Defender { get; set; }
 
-        private GameState state;
+        internal GameState state;
 
         private Stack<Card> activeStack = new();
 
         public void Start()
         {
-            attacker = players[0];
-            defender = players[1];
+            Attacker = players[0];
+            Defender = players[1];
             foreach (var player in players)
             {
                 player.DrawCards(deck);
@@ -37,7 +35,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             if (state == GameState.PendingAttack
                 && attackCard is not null
                 && CanAttack(attackCard)
-                && attacker.TryTakeCard(attackCard))
+                && Attacker.TryTakeCard(attackCard))
             {
                 activeStack.Push(attackCard);
                 MoveGameState(GameState.PendingDefence);
@@ -52,7 +50,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             if (state == GameState.PendingDefence
                 && activeStack.TryPeek(out var attackCard)
                 && CanBeat(attackCard, defendCard)
-                && defender.TryTakeCard(defendCard))
+                && Defender.TryTakeCard(defendCard))
             {
                 activeStack.Push(defendCard);
                 MoveGameState(GameState.PendingAttack);
@@ -64,7 +62,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
 
         public bool TryEndRound()
         {
-            if (CanEndRound())
+            if (CanDiscard())
             {
                 DiscardActiveStack();
                 RefillCards();
@@ -73,10 +71,19 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
                 MoveGameState(NextState());
                 return true;
             }
+            else if(activeStack.Any())
+            {
+                TakeActiveStackToDefender();
+                RefillCards();
+                CleanupEmplyUsers();
+                MoveToNextPlayerSkipDefender();
+                MoveGameState(NextState());
+                return true;
+            }
             return false;
         }
 
-        private bool CanEndRound() 
+        private bool CanDiscard() 
         {
             return activeStack.Any() && state == GameState.PendingAttack;
         }
@@ -84,6 +91,12 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
         private GameState NextState() 
         {
             return players.Count > 1 ? GameState.PendingAttack : GameState.Completed;
+        }
+        
+        private void TakeActiveStackToDefender()
+        {
+            Defender.Hand.AddRange(activeStack);
+            activeStack.Clear();
         }
 
         private void DiscardActiveStack()
@@ -125,8 +138,8 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
 
         private void MoveToNextPlayer()
         {
-            attacker = defender;
-            var indexOfDefender = players.IndexOf(defender);
+            Attacker = Defender;
+            var indexOfDefender = players.IndexOf(Defender);
             if (indexOfDefender == players.Count() - 1)
             {
                 indexOfDefender = 0;
@@ -135,8 +148,34 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             {
                 indexOfDefender++;
             }
-            defender = players.ElementAt(indexOfDefender);
+            Defender = players.ElementAt(indexOfDefender);
         }
+
+        private void MoveToNextPlayerSkipDefender()
+        {
+            var indexOfDefender = players.IndexOf(Defender);
+            if (indexOfDefender == players.Count() - 1)
+            {
+                indexOfDefender = 0;
+            }
+            else
+            {
+                indexOfDefender++;
+            }
+            Attacker = players.ElementAt(indexOfDefender);
+
+            if (indexOfDefender == players.Count() - 1)
+            {
+                indexOfDefender = 0;
+            }
+            else
+            {
+                indexOfDefender++;
+            }
+
+            Defender = players.ElementAt(indexOfDefender);
+        }
+
         private void MoveGameState(GameState newState) => state = newState;
 
         private void CleanupEmplyUsers() 
@@ -150,8 +189,8 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
 
         private void RefillCards() 
         {
-            attacker.DrawCards(deck);
-            defender.DrawCards(deck);
+            Attacker.DrawCards(deck);
+            Defender.DrawCards(deck);
         }
     }
 }

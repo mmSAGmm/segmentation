@@ -6,16 +6,20 @@ namespace Durak.Engine.Domain
 {
     public class Deck
     {
-        private readonly Queue<Card> _cards = new ();
-        private readonly Random _rnd = new();
+        internal readonly Queue<Card> _cards = new();
+        public Suit TrumpSuit { get; set; }
 
-        public Suit TrumpSuit { get; }
+        public Deck(Queue<Card> cards = null, Suit trumpSuit = default)
+        {
+            _cards = cards ?? new();
+            TrumpSuit = trumpSuit;
+        }
 
-        public Deck()
+        public void Shuffle()
         {
             var cards = Enum.GetValues<Suit>()
-                .SelectMany(s => Enum.GetValues<Rank>().Select(r => new Card(s, r)))
-                .ToList();
+                  .SelectMany(s => Enum.GetValues<Rank>().Select(r => new Card(s, r)))
+                  .ToList();
 
             // Перемешиваем
             cards = cards.Shuffle().ToList();

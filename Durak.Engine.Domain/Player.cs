@@ -31,6 +31,7 @@ namespace Durak.Engine.Domain
             if(card != null)
             {
                 Hand.Remove(card);
+                return true;
             }
             return false;
         }
