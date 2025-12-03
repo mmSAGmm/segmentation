@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
@@ -9,6 +10,8 @@ namespace Segmentation.Domain.Models
 {
     public class TypeMissmatchDynamicWrapper(object value, ILogger<TypeMissmatchDynamicWrapper> logger) : DynamicObject
     {
+        private static readonly ConcurrentDictionary<string, Func<object, object, object>> _expressionCache = new();
+
         HashSet<ExpressionType> supportedBoolOperations = new() { 
             ExpressionType.Equal, 
             ExpressionType.NotEqual, 
@@ -38,23 +41,33 @@ namespace Segmentation.Domain.Models
 
             try
             {
-                var left = Expression.Constant(value);
-                var right = Expression.Constant(arg);
+                var leftType = value.GetType();
+                var rightType = arg.GetType();
+                var cacheKey = $"{binder.Operation}_{leftType.FullName}_{rightType.FullName}";
 
-                var expr = Expression.MakeBinary(binder.Operation, left, right);
-                var lambda = Expression.Lambda<Func<object>>(Expression.Convert(expr, typeof(object)));
-                result = lambda.Compile()();
+                var compiledFunc = _expressionCache.GetOrAdd(cacheKey, key =>
+                {
+                    var leftParam = Expression.Parameter(typeof(object), "left");
+                    var rightParam = Expression.Parameter(typeof(object), "right");
+
+                    var leftConverted = Expression.Convert(leftParam, leftType);
+                    var rightConverted = Expression.Convert(rightParam, rightType);
+
+                    var expr = Expression.MakeBinary(binder.Operation, leftConverted, rightConverted);
+                    var convertedExpr = Expression.Convert(expr, typeof(object));
+                    var lambda = Expression.Lambda<Func<object, object, object>>(convertedExpr, leftParam, rightParam);
+                    return lambda.Compile();
+                });
+
+                result = compiledFunc(value, arg);
                 return true;
             }
             catch(Exception ex)
             {
-
                 logger.LogError(ex, "Failed on TryBinaryOperation");
                 result = null;
                 return false;
             }
-
-            return base.TryBinaryOperation(binder, arg, out result);
         }
     }
 }
