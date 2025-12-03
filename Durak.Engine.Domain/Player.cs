@@ -6,6 +6,7 @@ namespace Durak.Engine.Domain
 {
     public class Player
     {
+        public Guid Id { get; set; }
         public string Name { get; }
         public List<Card> Hand { get; } = new();
 
@@ -22,6 +23,16 @@ namespace Durak.Engine.Domain
             Console.WriteLine($"{Name}'s hand:");
             for (int i = 0; i < Hand.Count; i++)
                 Console.WriteLine($"{i + 1}: {Hand[i]}");
+        }
+
+        public bool TryTakeCard(Card attackCard)
+        {
+            var card = Hand.FirstOrDefault(x => x == attackCard);
+            if(card != null)
+            {
+                Hand.Remove(card);
+            }
+            return false;
         }
     }
 }
