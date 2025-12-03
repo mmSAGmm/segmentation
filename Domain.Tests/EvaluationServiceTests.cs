@@ -23,7 +23,6 @@ namespace Domain.Tests
             WithTypeMissmatchWrapper(false);
         }
 
-
         public void WithTypeMissmatchWrapper(bool useWrapper)
         {
             mocker.Use<IOptions<EvaluationOption>>(Options.Create<EvaluationOption>(new EvaluationOption { UseTypeMissmatchWapper = useWrapper }));
@@ -133,7 +132,6 @@ namespace Domain.Tests
         [Fact]
         public async Task WithoutTypeMissmatch()
         {
-            WithTypeMissmatchWrapper(false);
             WithProperties(new Dictionary<string, object>
             {
                 ["name"] = "1",
