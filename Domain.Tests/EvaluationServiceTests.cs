@@ -52,13 +52,31 @@ namespace Domain.Tests
             result.ShouldBe(true);
         }
 
+
+        [Fact]
+        public async Task NumberWithPlusEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["name"] = 1 });
+            WithExpression(@"x.name+1 == 2");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
+        }
+        [Fact]
+        public async Task NumberDivideLeftEvaluation()
+        {
+            WithProperties(new Dictionary<string, object> { ["name"] = 11 });
+            WithExpression(@"x.name%10 == 1");
+            var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
+            result.ShouldBe(true);
+        }
+
         [Fact]
         public async Task TypeMissMatchEvaluation()
         {
             WithProperties(new Dictionary<string, object> { ["name"] = "1" });
             WithExpression(@"x.name == 1");
             var result = await Subject.Evaluate(Guid.Empty, string.Empty, CancellationToken.None);
-            result.ShouldBe(null);
+            result.ShouldBe(false);
         }
 
         [Fact]

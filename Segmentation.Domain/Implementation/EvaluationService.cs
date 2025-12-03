@@ -14,6 +14,7 @@ namespace Segmentation.Domain.Implementation
         IPropertiesService propertiesService,
         IExpressionCompilationService expressionService,
         IExpressionCache expressionCache,
+        ILoggerFactory loggerFactory,
         ILogger<EvaluationService> logger) : IEvaluationService
     {
         public async Task<bool?> Evaluate(Guid segmentId, string propertiesId, CancellationToken token)
@@ -41,7 +42,7 @@ namespace Segmentation.Domain.Implementation
             return result;
         }
 
-        private static dynamic SafeDynamic(Dictionary<string, object> source)
+        private dynamic SafeDynamic(Dictionary<string, object> source)
         {
             Dictionary<string, object> container = new Dictionary<string, object>();
             foreach (var kvp in source)
@@ -56,7 +57,7 @@ namespace Segmentation.Domain.Implementation
                     };
                 }
 
-                container[kvp.Key] = value;
+                container[kvp.Key] = new TypeMissmatchDynamicWrapper(value, loggerFactory.CreateLogger<TypeMissmatchDynamicWrapper>());
             }
             return new SafeDynamic(container);
         }
