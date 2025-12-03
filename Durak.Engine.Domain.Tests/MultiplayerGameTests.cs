@@ -10,6 +10,7 @@ namespace Durak.Engine.Domain.Tests
         private AutoMocker mocker = new AutoMocker();
 
         private MultiplayerGame _subject;
+
         public MultiplayerGame Subject => _subject ??= mocker.CreateInstance<MultiplayerGame>();
 
         private readonly Card[] cards = new Card[] {
@@ -27,13 +28,13 @@ namespace Durak.Engine.Domain.Tests
                 new(Suit.Clubs, Rank.Seven),//11
                 new(Suit.Clubs, Rank.Eight)//12
             };
+
         private readonly List<Player> players = new List<Player>() { new("Jack"), new("Vasia") };
 
         public void WithUsers(List<Player> players) 
         {
             mocker.Use<List<Player>>(players);
         }
-
 
         public void WithDeck(Queue<Card> cards, Suit suit)
         {
