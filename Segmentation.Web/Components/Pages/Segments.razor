@@ -15,26 +15,27 @@
 else
 {
     <FluentStack>
-        <FluentListbox Width="300px" Height="900px" TOption="string" ValueChanged="@(OnValueChange)">
+        <FluentListbox Width="300px" Height="700px" TOption="string" ValueChanged="@(OnValueChange)">
             @foreach (var segment in segments)
             {
                 <FluentOption Value="@segment.Id.ToString()">@(segment.Name)</FluentOption>
             }
         </FluentListbox>
 
-        <FluentStack Orientation="Orientation.Vertical">
+        <FluentStack Width="300px" Orientation="Orientation.Vertical">
 
             <p>Id</p>
-            <FluentTextField Width="300px" Disabled="true" @bind-Value=id AriaLabel="No label"></FluentTextField>
+            <FluentTextField Style="width:300px" Disabled="true" @bind-Value=id AriaLabel="No label"></FluentTextField>
 
             <p>Name</p>
-            <FluentTextField Width="300px" @bind-Value=name AriaLabel="No label"></FluentTextField>
+            <FluentTextField Style="width:300px" @bind-Value=name AriaLabel="No label"></FluentTextField>
 
             <p>Expression</p>
-            <FluentTextArea Width="300px" @bind-Value=expression Rows="12"></FluentTextArea>
+            <FluentTextArea Style="width:300px" @bind-Value=expression Rows="12"></FluentTextArea>
             <FluentStack>
                 <FluentButton Appearance="Appearance.Accent" OnClick="@OnSaveClick" >Save</FluentButton>
-                <FluentButton Appearance="Appearance.Accent" OnClick="@OnNewClick" >New</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" OnClick="@OnNewClick">New</FluentButton>
+                <FluentButton Appearance="Appearance.Accent" OnClick="@OnDeleteClick">Delete</FluentButton>
             </FluentStack>
         </FluentStack>
     </FluentStack>
@@ -53,14 +54,25 @@ else
         expression = segment?.Expression;
         name = segment?.Name;
     }
-    
+
     private async Task OnNewClick()
     {
         id = string.Empty;
         expression = string.Empty;
         name = string.Empty;
     }
-    
+
+    private async Task OnDeleteClick()
+    {
+        var segment = segments?.FirstOrDefault(x => x.Id.ToString() == id);
+        if (segment is not null)
+        {
+            await SegmentsApiClient.Delete(segment.Id, CancellationToken.None);
+            await ReloadSegments();
+            await OnNewClick();
+        }
+    }
+
     private async Task OnSaveClick()
     {
         Guid localId = Guid.Empty;
@@ -75,21 +87,22 @@ else
         if (localId != Guid.Empty)
         {
             await SegmentsApiClient.Update(segment, CancellationToken.None);
+            await OnNewClick();
         }
         else
         {
             await SegmentsApiClient.Create(segment, CancellationToken.None);
 
         }
-        await Reload();
+        await ReloadSegments();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await Reload();
+        await ReloadSegments();
     }
 
-    private async Task Reload()
+    private async Task ReloadSegments()
     {
         segments = await SegmentsApiClient.GetSegmentPage(CancellationToken.None);
     }

@@ -20,5 +20,10 @@ namespace Segmentation.Web
         {
             await httpClient.PostAsJsonAsync("api/admin/v1/segment", segment, cancellationToken);
         }
+
+        public async Task Delete(Guid id, CancellationToken cancellationToken)
+        {
+            await httpClient.DeleteAsync($"api/admin/v1/segment/{id}", cancellationToken);
+        }
     }
 }
