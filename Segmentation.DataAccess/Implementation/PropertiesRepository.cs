@@ -1,8 +1,9 @@
-﻿using Dapper;
+﻿using Common.DataAccess.Abstraction;
+using Common.DataAccess.Options;
+using Dapper;
 using Microsoft.Extensions.Options;
 using Segmentation.DataAccess.Abstraction;
 using Segmentation.DataAccess.Models;
-using Segmentation.DataAccess.Options;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;

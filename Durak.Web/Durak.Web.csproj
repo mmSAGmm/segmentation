@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Segmentation.ServiceDefaults\Segmentation.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
 </Project>

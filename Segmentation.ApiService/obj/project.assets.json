@@ -1415,11 +1415,29 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+      "Common.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.Data.Sqlite": "10.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.0",
+          "Microsoft.Extensions.Options": "10.0.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Common.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Common.DataAccess.dll": {}
+        }
+      },
       "Segmentation.DataAccess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "AutoMapper": "15.1.0",
+          "Common.DataAccess": "1.0.0",
           "Dapper": "2.1.66",
           "Microsoft.Data.Sqlite": "10.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "10.0.0",
@@ -4421,6 +4439,11 @@
         "system.threading.ratelimiting.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Common.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../Common.DataAccess/Common.DataAccess.csproj",
+      "msbuildProject": "../Common.DataAccess/Common.DataAccess.csproj"
     },
     "Segmentation.DataAccess/1.0.0": {
       "type": "project",

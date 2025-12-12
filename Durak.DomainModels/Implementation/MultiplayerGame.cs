@@ -1,9 +1,9 @@
-﻿using Durak.Engine.Domain.GameEngine.Abtractions;
+﻿using Durak.DomainModels.GameEngine.Abtractions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Durak.Engine.Domain.GameEngine.Implementation
+namespace Durak.DomainModels.GameEngine.Implementation
 {
     public class MultiplayerGame : IGame
     {
@@ -12,7 +12,7 @@ namespace Durak.Engine.Domain.GameEngine.Implementation
             this.players = players;
             this.deck = deck;
         }
-        private Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         internal List<Player> players;
         

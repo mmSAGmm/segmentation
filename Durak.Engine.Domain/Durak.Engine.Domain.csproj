@@ -8,4 +8,7 @@
 	<ItemGroup>
 		<InternalsVisibleTo Include="Durak.Engine.Domain.Tests" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Durak.DataAccess\Durak.DataAccess.csproj" />
+	</ItemGroup>
 </Project>

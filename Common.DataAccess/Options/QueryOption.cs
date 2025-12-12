@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Segmentation.DataAccess.Options
+namespace Common.DataAccess.Options
 {
     public class QueryOption
     {

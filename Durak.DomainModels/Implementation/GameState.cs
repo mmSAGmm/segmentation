@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Durak.Engine.Domain.GameEngine.Implementation
+namespace Durak.DomainModels.GameEngine.Implementation
 {
     public enum GameState
     {

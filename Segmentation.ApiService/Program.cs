@@ -4,6 +4,7 @@ using Segmentation.ApiService.Handlers;
 using Segmentation.ApiService.Middlewares;
 using Segmentation.DataAccess;
 using Segmentation.Domain;
+using Common.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDomain(builder.Configuration);
-builder.Services.AddDataAccess(builder.Configuration);
+builder.Services.AddSegmentationDataAccess(builder.Configuration);
+builder.Services.AddCommonDataAccess(builder.Configuration);
 builder.Services.AddSingleton<ISystemClock, SystemClock>();
 builder.Services.AddMemoryCache();
 

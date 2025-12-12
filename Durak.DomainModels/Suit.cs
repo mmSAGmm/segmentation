@@ -1,4 +1,4 @@
-﻿namespace Durak.Engine.Domain
+﻿namespace Durak.DomainModels
 {
    public enum Suit { Hearts, Diamonds, Clubs, Spades }
 }

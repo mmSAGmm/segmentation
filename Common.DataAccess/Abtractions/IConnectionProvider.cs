@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Text;
 
-namespace Segmentation.DataAccess.Abstraction
+namespace Common.DataAccess.Abstraction
 {
     public interface IConnectionProvider
     {

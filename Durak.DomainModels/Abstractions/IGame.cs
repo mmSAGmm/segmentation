@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Durak.Engine.Domain.GameEngine.Abtractions
+namespace Durak.DomainModels.GameEngine.Abtractions
 {
     public interface IGame
     {

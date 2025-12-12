@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Durak.Engine.Domain
+namespace Durak.DomainModels
 {
     public class Game
     {

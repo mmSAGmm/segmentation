@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Durak.Engine.Domain
+namespace Durak.DomainModels
 {
     public enum Rank
     { Six = 6, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace }
