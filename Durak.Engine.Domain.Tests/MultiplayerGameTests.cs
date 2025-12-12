@@ -1,4 +1,5 @@
-using Durak.Engine.Domain.GameEngine.Implementation;
+using Durak.DomainModels;
+using Durak.DomainModels.GameEngine.Implementation;
 using Moq.AutoMock;
 using Shouldly;
 using System.Collections.Generic;

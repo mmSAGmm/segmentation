@@ -1,5 +1,4 @@
 ﻿using Durak.Engine.Domain;
-using Durak.Engine.Domain.GameEngine.Implementation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Durak.Web.Controllers
@@ -11,8 +10,6 @@ namespace Durak.Web.Controllers
         public async Task CreateGame(int playersCount)
         {
            
-
-            
         }
     }
 }
