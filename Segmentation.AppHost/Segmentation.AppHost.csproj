@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Durak.Web\Durak.Web.csproj" />
     <ProjectReference Include="..\Segmentation.ApiService\Segmentation.ApiService.csproj" />
     <ProjectReference Include="..\Segmentation.Web\Segmentation.Web.csproj" />
   </ItemGroup>

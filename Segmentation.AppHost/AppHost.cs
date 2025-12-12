@@ -9,4 +9,6 @@ builder.AddProject<Projects.Segmentation_Web>("webfrontend")
     .WithReference(apiService)
     .WaitFor(apiService);
 
+builder.AddProject<Projects.Durak_Web>("durak-web");
+
 builder.Build().Run();

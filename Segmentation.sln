@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Durak.Engine.Domain", "Dura
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Durak.Engine.Domain.Tests", "Durak.Engine.Domain.Tests\Durak.Engine.Domain.Tests.csproj", "{B94B6B6A-BB95-4AE1-92E3-3EBBC29374BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Durak.Web", "Durak.Web\Durak.Web.csproj", "{5E9CB253-2273-4E1B-0655-CEDA169C23B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{B94B6B6A-BB95-4AE1-92E3-3EBBC29374BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B94B6B6A-BB95-4AE1-92E3-3EBBC29374BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B94B6B6A-BB95-4AE1-92E3-3EBBC29374BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E9CB253-2273-4E1B-0655-CEDA169C23B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9CB253-2273-4E1B-0655-CEDA169C23B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9CB253-2273-4E1B-0655-CEDA169C23B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9CB253-2273-4E1B-0655-CEDA169C23B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
