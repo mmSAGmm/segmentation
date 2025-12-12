@@ -34,6 +34,16 @@ namespace Durak.DataAccess.Implementation
                commandTimeout: option.Value.TimeoutSeconds);
         }
 
+        public async Task<MultiplayerGame> GetGame(Guid id)
+        {
+            var gameData = await Connection.QueryFirstOrDefaultAsync<string>(
+                "SELECT Json FROM Games WHERE Id = @Id",
+                new { Id = id }, commandTimeout: option.Value.TimeoutSeconds);
+
+            var game = JsonSerializer.Deserialize<MultiplayerGame>(gameData);
+            return game;
+        }
+
         public async Task Init()
         {
             await Connection.ExecuteAsync("CREATE Table Games (Id VARCHAR(20) PRIMARY KEY, Json TEXT NOT NULL);",

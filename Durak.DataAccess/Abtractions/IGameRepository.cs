@@ -9,6 +9,8 @@ namespace Durak.DataAccess.Abtractions
     {
         Task CreateGame(MultiplayerGame game);
 
+        Task<MultiplayerGame> GetGame(Guid id);
+
         Task  UpdateGame(MultiplayerGame game);
 
         Task DeleteGame(Guid id);
