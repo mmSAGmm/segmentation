@@ -12,5 +12,7 @@ namespace Durak.DataAccess.Abtractions
         Task  UpdateGame(MultiplayerGame game);
 
         Task DeleteGame(Guid id);
+
+        Task Init();
     }
 }
