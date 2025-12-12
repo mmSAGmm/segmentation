@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Segmentation.DataAccess.Abstraction;
 using Segmentation.DataAccess.Implementation;
-using Segmentation.DataAccess.Options;
 using Segmentation.Domain.Abstractions;
 using Segmentation.Domain.Implementation;
 using Segmentation.Domain.Options;
