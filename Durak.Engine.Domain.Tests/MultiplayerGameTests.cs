@@ -48,10 +48,10 @@ namespace Durak.Engine.Domain.Tests
             WithDeck(ToQueue(cards), Suit.Hearts);
             WithUsers(players);
             
-            Subject.state.ShouldBe(GameState.Created);
+            Subject.State.ShouldBe(GameState.Created);
             Subject.Start();
             
-            Subject.state.ShouldBe(GameState.PendingAttack);
+            Subject.State.ShouldBe(GameState.PendingAttack);
 
             var attacker = Subject.Attacker;
             var defender = Subject.Defender;
@@ -59,12 +59,12 @@ namespace Durak.Engine.Domain.Tests
             Subject.TryAttack(Subject.Attacker.Hand.First())
                 .ShouldBe(true);
 
-            Subject.state.ShouldBe(GameState.PendingDefence);
+            Subject.State.ShouldBe(GameState.PendingDefence);
            
             Subject.TryDeffend(Subject.Defender.Hand.First())
                 .ShouldBe(true);
 
-            Subject.state.ShouldBe(GameState.PendingAttack);
+            Subject.State.ShouldBe(GameState.PendingAttack);
 
             Subject.TryEndRound()
                 .ShouldBeTrue();
@@ -72,7 +72,7 @@ namespace Durak.Engine.Domain.Tests
             Subject.Attacker.Hand.Count.ShouldBe(5);
             Subject.Defender.Hand.Count.ShouldBe(6);
             ShouldSwapPlayers(attacker, defender);
-            Subject.state.ShouldBe(GameState.PendingAttack);
+            Subject.State.ShouldBe(GameState.PendingAttack);
         }
 
         [Fact]
@@ -86,13 +86,13 @@ namespace Durak.Engine.Domain.Tests
             Subject.TryAttack(Subject.Attacker.Hand.First())
                 .ShouldBe(true);
 
-            Subject.TryDeffend(Subject.Defender.Hand.First(x=>x.Suit == Subject.deck.TrumpSuit))
+            Subject.TryDeffend(Subject.Defender.Hand.First(x=>x.Suit == Subject.Deck.TrumpSuit))
                 .ShouldBe(true);
 
             Subject.TryAttack(Subject.Attacker.Hand.First())
                 .ShouldBe(true);
 
-            Subject.TryDeffend(Subject.Defender.Hand.First(x => x.Suit == Subject.deck.TrumpSuit))
+            Subject.TryDeffend(Subject.Defender.Hand.First(x => x.Suit == Subject.Deck.TrumpSuit))
                 .ShouldBe(true);
             Subject.TryEndRound().ShouldBeTrue();
 
@@ -117,7 +117,7 @@ namespace Durak.Engine.Domain.Tests
                 .ShouldBeTrue();
 
             ShouldSkipDefender(attacker, defender);
-            Subject.state.ShouldBe(GameState.PendingAttack);
+            Subject.State.ShouldBe(GameState.PendingAttack);
         }
 
         private void ShouldSwapPlayers(Player oldAttacker, Player oldDefender)

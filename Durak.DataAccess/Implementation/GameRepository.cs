@@ -6,6 +6,7 @@ using Durak.DomainModels;
 using Durak.DomainModels.GameEngine.Abtractions;
 using Durak.DomainModels.GameEngine.Implementation;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -22,8 +23,8 @@ namespace Durak.DataAccess.Implementation
 
         public async Task CreateGame(MultiplayerGame game)
         {
-            await Connection.ExecuteAsync("INSERT INTO Games(Id, Json) VALUES(@Id, @Json)",
-                new { game.Id, Json = JsonSerializer.Serialize(game) },
+            await Connection.ExecuteAsync("INSERT INTO Games VALUES(@Id, @Json)",
+                new { game.Id, Json = JsonConvert.SerializeObject(game) },
                 commandTimeout: option.Value.TimeoutSeconds);
         }
 
@@ -40,20 +41,25 @@ namespace Durak.DataAccess.Implementation
                 "SELECT Json FROM Games WHERE Id = @Id",
                 new { Id = id }, commandTimeout: option.Value.TimeoutSeconds);
 
-            var game = JsonSerializer.Deserialize<MultiplayerGame>(gameData);
+            var game = JsonConvert.DeserializeObject<MultiplayerGame>(gameData);
             return game;
         }
 
         public async Task Init()
         {
-            await Connection.ExecuteAsync("CREATE Table Games (Id VARCHAR(20) PRIMARY KEY, Json TEXT NOT NULL);",
-              commandTimeout: option.Value.TimeoutSeconds);
+            await Connection.ExecuteAsync(
+             @"
+CREATE TABLE Games 
+(
+    Id VARCHAR(20) PRIMARY KEY,
+    Json TEXT NOT NULL
+);");
         }
 
         public async Task UpdateGame(MultiplayerGame game)
         {
             await Connection.ExecuteAsync("UPDATE Games SET Json=@Json WHERE Id = @Id",
-               new { game.Id, Json = JsonSerializer.Serialize(game) },
+               new { game.Id, Json = JsonConvert.SerializeObject(game) },
                commandTimeout: option.Value.TimeoutSeconds);
         }
     }

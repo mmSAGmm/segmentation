@@ -24,6 +24,11 @@ namespace Durak.Engine.Domain.Implementation
             return game.Id;
         }
 
+        public async Task Init()
+        {
+            await gameRepository.Init();
+        }
+
         public async Task<MultiplayerGame> StartGame(Guid id)
         {
             var game = await gameRepository.GetGame(id);
