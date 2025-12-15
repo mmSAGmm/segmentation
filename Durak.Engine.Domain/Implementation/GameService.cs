@@ -24,6 +24,11 @@ namespace Durak.Engine.Domain.Implementation
             return game.Id;
         }
 
+        public Task<MultiplayerGame> Get(Guid id)
+        {
+            return gameRepository.GetGame(id);
+        }
+
         public async Task Init()
         {
             await gameRepository.Init();
@@ -32,21 +37,30 @@ namespace Durak.Engine.Domain.Implementation
         public async Task<MultiplayerGame> StartGame(Guid id)
         {
             var game = await gameRepository.GetGame(id);
-            game.Start();
-            await gameRepository.UpdateGame(game);
-            return game;
+            if (game.State == GameState.Created)
+            {
+                game.Deck.Shuffle();
+                game.Start();
+                await gameRepository.UpdateGame(game);
+                return game;
+            }
+            return null;
         }
 
         public async Task<MultiplayerGame> TryAttack(Guid playerId, Guid gameId, Card card)
         {
             var game = await gameRepository.GetGame(gameId);
-            if(game?.Attacker?.Id != playerId)
+            if (game?.Attacker?.Id != playerId)
             {
                 return game;
             }
             var result = game.TryAttack(card);
             await gameRepository.UpdateGame(game);
-            return game;
+            if (result)
+            {
+                return game;
+            }
+            return null;
         }
 
         public async Task<MultiplayerGame> TryDeffend(Guid playerId, Guid gameId, Card card)
@@ -58,7 +72,11 @@ namespace Durak.Engine.Domain.Implementation
             }
             var result = game.TryDeffend(card);
             await gameRepository.UpdateGame(game);
-            return game;
+            if (result)
+            {
+                return game;
+            }
+            return null;
         }
 
         public async Task<MultiplayerGame> TryEndRound(Guid playerId, Guid gameId)
@@ -66,7 +84,11 @@ namespace Durak.Engine.Domain.Implementation
             var game = await gameRepository.GetGame(gameId);
             var result = game.TryEndRound();
             await gameRepository.UpdateGame(game);
-            return game;
+            if (result)
+            {
+                return game;
+            }
+            return null;
         }
     }
 }

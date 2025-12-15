@@ -49,6 +49,7 @@ namespace Durak.DataAccess.Implementation
         {
             await Connection.ExecuteAsync(
              @"
+DROP TABLE Games;
 CREATE TABLE Games 
 (
     Id VARCHAR(20) PRIMARY KEY,

@@ -6,7 +6,7 @@ namespace Durak.DomainModels
 {
     public class Player
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; }
         public List<Card> Hand { get; } = new();
 
@@ -25,9 +25,9 @@ namespace Durak.DomainModels
                 Console.WriteLine($"{i + 1}: {Hand[i]}");
         }
 
-        public bool TryTakeCard(Card attackCard)
+        public bool TryTakeCard(Card actionCard)
         {
-            var card = Hand.FirstOrDefault(x => x == attackCard);
+            var card = Hand.FirstOrDefault(x => x.Rank == actionCard.Rank && x.Suit == actionCard.Suit);
             if(card != null)
             {
                 Hand.Remove(card);

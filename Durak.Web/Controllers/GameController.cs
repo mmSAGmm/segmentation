@@ -1,4 +1,6 @@
 ﻿using Durak.DomainModels;
+using Durak.DomainModels.GameEngine.Abtractions;
+using Durak.DomainModels.GameEngine.Implementation;
 using Durak.Engine.Domain;
 using Durak.Engine.Domain.Abtractions;
 using Microsoft.AspNetCore.Mvc;
@@ -22,27 +24,45 @@ namespace Durak.Web.Controllers
         }
 
         [HttpPost("start")]
-        public async Task StartGame(Guid gameId)
+        public async Task<IActionResult> StartGame(Guid gameId)
         {
-            await gameService.StartGame(gameId);
+            var game = await gameService.StartGame(gameId);
+            if (game != null)
+            {
+                return Ok(game);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("state")]
+        public async Task<Player> GetState(Guid playerId, Guid gameId)
+        {
+            var game = await gameService.Get(gameId);
+            return game?.Players?.FirstOrDefault(x => x.Id == playerId);
         }
 
         [HttpPost("attack")]
-        public async Task Attack(Guid playerId, Guid gameId, Card card)
+        public async Task<IActionResult> Attack(Guid playerId, Guid gameId, Card card)
         {
-            await gameService.TryAttack(playerId, gameId, card);
+            var game = await gameService.TryAttack(playerId, gameId, card);
+            if (game == null) return BadRequest();
+            return Ok(game);
         }
 
         [HttpPost("defend")]
-        public async Task Defend(Guid playerId, Guid gameId, Card card)
+        public async Task<IActionResult> Defend(Guid playerId, Guid gameId, Card card)
         {
-            await gameService.TryDeffend(playerId, gameId, card);
+            var game = await gameService.TryDeffend(playerId, gameId, card);
+            if (game == null) return BadRequest();
+            return Ok(game);
         }
 
         [HttpPost("end")]
-        public async Task EndRound(Guid playerId, Guid gameId, Card card)
+        public async Task<IActionResult> EndRound(Guid playerId, Guid gameId, Card card)
         {
-            await gameService.TryEndRound(playerId, gameId);
+            var game = await gameService.TryEndRound(playerId, gameId);
+            if (game == null) return BadRequest();
+            return Ok(game);
         }
     }
 }
